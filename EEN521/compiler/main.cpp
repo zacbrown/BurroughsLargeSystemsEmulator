@@ -12,12 +12,17 @@
 using namespace std;
 	
 int main(int argc, char **argv)
- { if (argc < 3)
-    { cout << "ERROR: no input file provided or no output file provided\n";
+ { if (argc < 2)
+    { cout << "ERROR: no input file provided\n";
       return 1; }
    ifstream infile (argv[1]);
    reader in (infile);
-   trans_set_output_file_stream(argv[2]);
+   char *new_filename = strdup(argv[1]);
+   char *dot_delim = strrchr(new_filename, '.');
+   dot_delim++;
+   *dot_delim = 's';
+    
+   trans_set_output_file_stream(new_filename);
 
    node *prog = parse(in);
 
