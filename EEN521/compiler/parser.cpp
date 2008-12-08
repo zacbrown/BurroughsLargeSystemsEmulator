@@ -312,7 +312,7 @@ node * parse_top_level( reader & input )
 	   if (s != "function" && s != "global")
 		   input.error("Error, invalid import: \"" + s + "\"\n");
 
-	   node *n = N("Input", s);
+	   node *n = N("import", s);
 
        while(true) {
           input >> s;
