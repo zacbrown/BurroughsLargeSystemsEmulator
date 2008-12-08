@@ -16,6 +16,7 @@ struct node
    node * add(node *n);
    void print(int indent=0);
    void translateexpression(int reg);
+   void translate_assembly(void);
    void translatejumpiffalse(int where, int reg);
    void translatejumpiftrue(int where, int reg);
    void translatestatement();

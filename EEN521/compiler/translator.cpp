@@ -449,45 +449,13 @@ void node::translatestatement()
    }
 
    else if (tag == "assembly")
-   {
-	   string::size_type open_bracket = detail.find("<");
-	   string::size_type close_bracket = detail.find(">");
-	   string lookup_symbol = "";
-	   stringstream formatted_str;
-
-	   if (open_bracket != string::npos) {
-		   if (close_bracket != string::npos) {
-				lookup_symbol = detail.substr(open_bracket+1, close_bracket-open_bracket-1);
-				symbolinfo *s = ST.lookup(lookup_symbol);
-				
-				string sign = "";
-				if (s->info >= 0) sign = "+";
-				formatted_str << detail.substr(0, open_bracket);
-				if (s->kind == 'g')
-					formatted_str << "g_" << lookup_symbol <<
-						detail.substr(close_bracket+1);
-				else
-					formatted_str << "FP" << sign << s->info <<
-						detail.substr(close_bracket+1);
-				fout << format_assembly(formatted_str.str());
-		   }
-		   else {
-			   cout << "Error: invalid embedded assembly\n";
-			   print();
-			   exit(0);
-		   }
-	   }
-	   else {
-		   formatted_str << detail;
-		   fout << format_assembly(formatted_str.str());
-	   }
-   }
+        translate_assembly();
 
    else if(tag == "return")
     { if (detail == "void")
 	  { fout << "     LOAD   SP, FP\n";
 		fout << "     POP    FP\n";
-		fout << "     RET\n"; }
+		fout << "     RET\n\n"; }
 
       else
       { part[0]->translateexpression(1);
@@ -502,6 +470,39 @@ void node::translatestatement()
       cout << "\n";
       exit(1); } }
 
+void node::translate_assembly(void) {
+    string::size_type open_bracket = detail.find("<");
+    string::size_type close_bracket = detail.find(">");
+    string lookup_symbol = "";
+    stringstream formatted_str;
+
+    if (open_bracket != string::npos) {
+        if (close_bracket != string::npos) {
+            lookup_symbol = detail.substr(open_bracket+1, close_bracket-open_bracket-1);
+            symbolinfo *s = ST.lookup(lookup_symbol);
+
+            string sign = "";
+            if (s->info >= 0) sign = "+";
+            formatted_str << detail.substr(0, open_bracket);
+            if (s->kind == 'g')
+                formatted_str << "g_" << lookup_symbol <<
+                detail.substr(close_bracket+1);
+            else
+                formatted_str << "FP" << sign << s->info <<
+                detail.substr(close_bracket+1);
+            fout << format_assembly(formatted_str.str());
+        }
+        else {
+            cout << "Error: invalid embedded assembly\n";
+            print();
+            exit(0);
+        }
+    }
+    else {
+        formatted_str << detail;
+        fout << format_assembly(formatted_str.str());
+    }
+}
 
 void node::translate_top_level()
 {
@@ -627,7 +628,7 @@ void node::translate_top_level()
             ST.declare(item->detail, 'c', item->value);
         }
     }
-
+    else if (tag == "assembly") translate_assembly();
 	else if (tag == "end") return;
 
 	else

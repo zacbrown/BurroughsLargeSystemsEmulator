@@ -355,6 +355,12 @@ node * parse_top_level( reader & input )
       result->add(parse_block(input));
       return result; }
 
+   if (s == "<|") {
+		s = input.read_assembly();
+        node *n = N("assembly", s);
+		input >> s;
+        return n;
+	}
 
    if (s == "end")
       return N("end");
