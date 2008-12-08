@@ -306,16 +306,35 @@ node * parse_top_level( reader & input )
       return n; 
    }
 
+   if (s == "import")
+   {
+	   input >> s;
+	   if (s != "function" && s != "global")
+		   input.error("Error, invalid import: \"" + s + "\"\n");
+
+	   node *n = N("Input", s);
+
+       while(true) {
+          input >> s;
+		  if(!isalpha(s[0]))
+			input.error("not a valid function name for input.");
+          n->add(N("item", s));
+          input >> s;
+          if (s != ",") break;
+       }
+       return n;
+
     if (s == "export") {
        input >> s;
-       if (s != "function" && s != "global") {
-           cout << "Error, invalid export: \"" << s << "\"\n";
-           exit(0);
-       }
+       if (s != "function" && s != "global")
+            input.error("Error, invalid export: \"" + s + "\"\n");
+
        node *n = N("export", s);
        
        while(true) {
           input >> s;
+		  if(!isalpha(s[0]))
+			input.error("not a valid function name for export.");
           n->add(N("item", s));
           input >> s;
           if (s != ",") break;
