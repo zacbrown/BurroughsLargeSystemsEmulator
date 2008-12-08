@@ -323,6 +323,7 @@ node * parse_top_level( reader & input )
           if (s != ",") break;
        }
        return n;
+   }
 
     if (s == "export") {
        input >> s;
