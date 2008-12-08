@@ -531,7 +531,7 @@ void node::translate_top_level()
 
 	else if(tag == "functiondef")
 	{ 
-		int offset = 1;
+		int offset = 2;
 		fout << "\nf_" << detail << ":\n";
 		fout << "     PUSH   FP\n";
 		fout << "     LOAD   FP, SP\n";
