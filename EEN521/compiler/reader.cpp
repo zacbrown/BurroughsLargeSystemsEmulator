@@ -42,7 +42,7 @@ char reader::getchar()
  { if (pos < 0)
     { pos += 1;
       return ' '; }
-   else if (pos > length)
+   else if (pos > length || line[pos] == '#')
     { getline(in, line);
       pos = 0;
       length = line.length();
