@@ -318,7 +318,7 @@ node * parse_top_level( reader & input )
           input >> s;
 		  if(!isalpha(s[0]))
 			input.error("not a valid function name for input.");
-          n->add(N("item", s));
+          n->add(N("importitem", s));
           input >> s;
           if (s != ",") break;
        }
@@ -336,7 +336,7 @@ node * parse_top_level( reader & input )
           input >> s;
 		  if(!isalpha(s[0]))
 			input.error("not a valid function name for export.");
-          n->add(N("item", s));
+          n->add(N("exportitem", s));
           input >> s;
           if (s != ",") break;
        }

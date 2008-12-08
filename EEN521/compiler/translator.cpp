@@ -516,6 +516,19 @@ void node::translate_top_level()
         }
     }
 
+	if (tag == "import") {
+        int size = part.size();
+
+        for (int i = 0; i < size; i++) {
+            string prefix;
+            if (detail == "function")
+                prefix = "f_";
+            else prefix = "g_";
+
+            fout << "  .IMPORT   " << prefix << part[i]->detail << endl;
+        }
+    }
+
 	else if(tag == "functiondef")
 	{ 
 		int offset = 1;
@@ -627,6 +640,16 @@ void node::add_top_level_decl()
 		name = detail;
 		kind = 'f';
 		ST.declare(name, kind, 0);
+	}
+
+	if (tag == "import") 
+	{
+		for (int i=0; i<part.size(); i++)
+       { node * n = part[i];
+         string name = n->detail;
+         char kind = 'f';
+         ST.declare(name, kind, 0); 
+	    }
 	}
 
 	if (tag == "global") 
