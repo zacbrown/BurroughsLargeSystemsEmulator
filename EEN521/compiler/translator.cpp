@@ -24,6 +24,7 @@ typedef struct str_label_s {
 } str_label_t, *str_label_p;
 
 vector<str_label_t> string_label_list;
+vector<string> import_export_write_list;
 
 static string format_assembly(string line) {
 	int i = 0;
@@ -512,7 +513,9 @@ void node::translate_top_level()
                 prefix = "f_";
             else prefix = "g_";
 
-            fout << "  .EXPORT   " << prefix << part[i]->detail << endl;
+            stringstream sout;
+            sout << "  .EXPORT   " << prefix << part[i]->detail << endl;
+            import_export_write_list.push_back(sout.str());
         }
     }
 
@@ -525,7 +528,9 @@ void node::translate_top_level()
                 prefix = "f_";
             else prefix = "g_";
 
-            fout << "  .IMPORT   " << prefix << part[i]->detail << endl;
+            stringstream sout;
+            sout << "  .IMPORT   " << prefix << part[i]->detail << endl;
+            import_export_write_list.push_back(sout.str());
         }
     }
 
@@ -693,7 +698,7 @@ void node::add_top_level_decl()
     }
 }
 
-static void write_string_labels() {
+static void write_string_labels(void) {
 	int size = string_label_list.size();
 	fout << "\n\n";
 	for (int i = 0; i < size; i++) {
@@ -701,6 +706,13 @@ static void write_string_labels() {
         fout << tmp->label << ": .STRING " << 
 			tmp->detail << endl;
 	}
+}
+
+static void write_import_export_labels(void) {
+    int size = import_export_write_list.size();
+    fout << "\n\n";
+    for (int i = 0; i < size; i++)
+        fout << import_export_write_list[i];
 }
 
 void node::translate_program()
@@ -754,4 +766,5 @@ void node::translate_program()
 	}
 
 	write_string_labels();
+    write_import_export_labels();
 }
