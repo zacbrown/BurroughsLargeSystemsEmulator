@@ -430,7 +430,8 @@ void node::translatestatement()
                     exit(0);
                 }
                 if (s->kind != 'c') {
-                    cout << "Error: only const values can be used to reference size of array or struct\n";
+                    cout << "Error: only const values can be used to reference size of local array or struct\n";
+                    cout << "\ttype error: " << s->kind << endl;
                     exit(0);
                 }
                 size = s->info;
@@ -608,6 +609,7 @@ void node::translate_top_level()
                 }
                 if (s->kind != 'c') {
                     cout << "Error: only const values can be used to reference size of array or struct\n";
+                    cout << "\ttype error: " << s->kind << endl;
                     exit(0);
                 }
                 size = s->info;
@@ -675,9 +677,10 @@ void node::add_top_level_decl()
                 }
                 if (s->kind != 'c') {
                     cout << "Error: only const values can be used to reference size of array or struct\n";
+                    cout << "\ttype error: " << s->kind << endl;
                     exit(0);
                 }
-                size = s->info; cout << "ref_var: " << n->ref_var <<endl;
+                size = s->info;
             }
          }
          else
