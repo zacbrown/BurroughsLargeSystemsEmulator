@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "compiler", "compiler\compiler.vcproj", "{84C079F7-9457-4010-99F0-99D3CFC822D1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "assembler", "assembler\assembler.vcproj", "{7B36C1C2-A82F-46AE-B769-135ABB92B19F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "linker", "linker\linker.vcproj", "{A6D61439-94E8-41D3-90E1-4D07CC6DFAB3}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84C079F7-9457-4010-99F0-99D3CFC822D1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{84C079F7-9457-4010-99F0-99D3CFC822D1}.Debug|Win32.Build.0 = Debug|Win32
+		{84C079F7-9457-4010-99F0-99D3CFC822D1}.Release|Win32.ActiveCfg = Release|Win32
+		{84C079F7-9457-4010-99F0-99D3CFC822D1}.Release|Win32.Build.0 = Release|Win32
+		{7B36C1C2-A82F-46AE-B769-135ABB92B19F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7B36C1C2-A82F-46AE-B769-135ABB92B19F}.Debug|Win32.Build.0 = Debug|Win32
+		{7B36C1C2-A82F-46AE-B769-135ABB92B19F}.Release|Win32.ActiveCfg = Release|Win32
+		{7B36C1C2-A82F-46AE-B769-135ABB92B19F}.Release|Win32.Build.0 = Release|Win32
+		{A6D61439-94E8-41D3-90E1-4D07CC6DFAB3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A6D61439-94E8-41D3-90E1-4D07CC6DFAB3}.Debug|Win32.Build.0 = Debug|Win32
+		{A6D61439-94E8-41D3-90E1-4D07CC6DFAB3}.Release|Win32.ActiveCfg = Release|Win32
+		{A6D61439-94E8-41D3-90E1-4D07CC6DFAB3}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
