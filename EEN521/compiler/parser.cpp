@@ -475,6 +475,19 @@ node * parse_expression( reader & input )
       return n;
     }
 
+    if (s == "mallocStat") {
+        node *n = N("malloc_stat");
+        input >> s;
+        if (isdigit(s[0]))
+            n->value = string_to_int(s);
+        else if (isalpha(s[0])) {
+            n->value = -1;
+            n->ref_var = s;
+        }
+        else input.error("incorrect numeric value or variable name following mallocStat");
+        return n;
+    }
+
    if (s == "*") {
 	   node *n = N("follow_ptr");
 	   input >> s;

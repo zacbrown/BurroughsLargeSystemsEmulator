@@ -25,6 +25,7 @@ typedef struct str_label_s {
 
 vector<str_label_t> string_label_list;
 vector<string> import_export_write_list;
+vector<string> static_malloc_write_list;
 
 static string format_assembly(string line) {
 	int i = 0;
@@ -259,6 +260,27 @@ void node::translateexpression(int reg)
    else if(tag == "number")
       fout << "     LOAD   R" << reg << ", " << value << "\n";
 
+   else if(tag == "malloc_stat") {
+       int num_val;
+       stringstream sout;
+       sout << "static_malloc_" << static_malloc_write_list.size();
+       string label = sout.str();
+       sout << ": .SPACE ";
+       if (value > 0) sout << value << endl;
+       else if (value == -1 && ref_var != "") {
+           symbolinfo *s = ST.lookup(ref_var);
+           if (s->kind == 'u')
+               cout << "Error: undeclared numeric constant '" << ref_var << "'\n";
+           else if (s->kind == 'c')
+               sout << s->info << endl; 
+           else cout << "Error: cannot use variables for arguments in mallocStat\n";
+       }
+       else cout << "Error: mallocStat has invalid arguments.\n";
+       static_malloc_write_list.push_back(sout.str());
+
+       fout << "     LOAD   R" << reg << ", " << label << endl;
+   }
+
    else if(tag == "binop")
     { part[0]->translateexpression(reg);
       part[1]->translateexpression(reg+1);
@@ -342,22 +364,43 @@ void node::translatestatement()
          part[i]->translatestatement(); } }
 
    else if(tag == "assignment")
-    { part[1]->translateexpression(1);
-      string variable = part[0]->detail;
-      symbolinfo * s = ST.lookup( variable );
-      string sign = "";
-      if (s->info>=0)
-         sign = "+";
-      if (s->kind=='u')
-         cout << "Error: undeclared variable '" << variable << "'\n";
-      else if (s->kind=='f')
-         cout << "Error: assignment to function name '" << variable << "'\n";
-      else if (s->kind=='L' || s->kind=='G')
-         cout << "Error: assignment to array name '" << variable << "'\n";
-      else if (s->kind=='l')
-         fout << "     STORE  R1, [FP" << sign << s->info << "]\n";
-      else if (s->kind=='g')
-		 fout << "     STORE  R1, [g_" << variable << "]\n"; }
+   { 
+       if (part[1]->tag == "malloc_stat") {
+           part[1]->translateexpression(1);
+           string variable = part[0]->detail;
+           symbolinfo * s = ST.lookup( variable );
+           string sign = "";
+           if (s->info>=0)
+               sign = "+";
+           if (s->kind=='u')
+               cout << "Error: undeclared variable '" << variable << "'\n";
+           else if (s->kind=='f')
+               cout << "Error: assignment to function name '" << variable << "'\n";
+           else if (s->kind=='L' || s->kind=='G')
+               cout << "Error: assignment to array name '" << variable << "'\n";
+           else if (s->kind=='l')
+               fout << "     STORE  R1, FP" << sign << s->info << "\n";
+           else if (s->kind=='g')
+               fout << "     STORE  R1, g_" << variable << "\n";
+       }
+       else {
+           part[1]->translateexpression(1);
+           string variable = part[0]->detail;
+           symbolinfo * s = ST.lookup( variable );
+           string sign = "";
+           if (s->info>=0)
+               sign = "+";
+           if (s->kind=='u')
+               cout << "Error: undeclared variable '" << variable << "'\n";
+           else if (s->kind=='f')
+               cout << "Error: assignment to function name '" << variable << "'\n";
+           else if (s->kind=='L' || s->kind=='G')
+               cout << "Error: assignment to array name '" << variable << "'\n";
+           else if (s->kind=='l')
+               fout << "     STORE  R1, [FP" << sign << s->info << "]\n";
+           else if (s->kind=='g')
+               fout << "     STORE  R1, [g_" << variable << "]\n"; } 
+    }
 
 	else if(tag == "assign_ptr")
     { part[1]->translateexpression(1);
@@ -704,7 +747,7 @@ void node::add_top_level_decl()
 
 static void write_string_labels(void) {
 	int size = string_label_list.size();
-	fout << "\n\n";
+	fout << "\n";
 	for (int i = 0; i < size; i++) {
         str_label_p tmp = &string_label_list[i];
         fout << tmp->label << ": .STRING " << 
@@ -714,9 +757,22 @@ static void write_string_labels(void) {
 
 static void write_import_export_labels(void) {
     int size = import_export_write_list.size();
-    fout << "\n\n";
+    fout << "\n";
     for (int i = 0; i < size; i++)
         fout << import_export_write_list[i];
+}
+
+static void write_static_malloc_labels(void) {
+    int size = static_malloc_write_list.size();
+    fout << "\n";
+    for (int i = 0; i < size; i++)
+        fout << static_malloc_write_list[i];
+}
+
+static void write_labels(void) {
+    write_string_labels();
+    write_import_export_labels();
+    write_static_malloc_labels();
 }
 
 void node::translate_program()
@@ -769,6 +825,5 @@ void node::translate_program()
 		part[i]->translate_top_level();
 	}
 
-	write_string_labels();
-    write_import_export_labels();
+	write_labels();
 }
