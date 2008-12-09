@@ -404,6 +404,7 @@ node * parse(reader & input)
 		tmp = parse_top_level(input);
 		tmp->add_top_level_decl();
 	}
+    str_ind = 0;
 	tmp = N("global"); 
 	tmp->add(N("item", "MEMSTART"));
 	tmp->add(N("item", "MEMAVAIL"));
@@ -530,7 +531,7 @@ node * parse_expression( reader & input )
 
    if (s[0] == '\"' && s[s.length() - 1] == '\"') {
       stringstream tmp_stream;
-      tmp_stream << "string_" << str_ind / 2;
+      tmp_stream << "string_" << str_ind;
       str_ind++;
       node *n = N("string", s);
       n->ref_var = tmp_stream.str();
