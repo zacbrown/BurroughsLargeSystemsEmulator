@@ -343,8 +343,11 @@ node * parse_top_level( reader & input )
        return n;
     }
 
-    if (s == "const")
-        return parse_const(input);
+    if (s == "const") { 
+        node *n = parse_const(input);
+        input >> s;
+        return n;
+    }
 
    if (s == "main")
     { node * result = N("main");

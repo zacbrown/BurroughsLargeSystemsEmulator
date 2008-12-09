@@ -104,7 +104,7 @@ void symboltable::print(void)
             cout << "name: " << blah->name << endl;
             symbolinfo *next = blah->info;
             while(next != NULL) {
-                cout << "\tkind: " << next->kind << endl;
+                cout << "\tkind: " << next->kind << " | info: " << next->info << endl;
                 next = next->prev;
             }
         }
@@ -740,7 +740,7 @@ void node::add_top_level_decl()
             if (s->kind != 'u') {
                 continue;
             }
-            ST.declare(item->detail, 'c', item->value);
+            ST.declare(item->detail, 'c', item->value); 
         }
     }
 }
