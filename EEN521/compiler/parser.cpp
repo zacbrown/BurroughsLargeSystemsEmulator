@@ -12,7 +12,7 @@
 
 using namespace std;
 
-int str_ind = 0;
+static int str_ind = 0;
 
 node * parse_statement( reader & input )
  { string s;
@@ -528,7 +528,8 @@ node * parse_expression( reader & input )
 
    if (s[0] == '\"' && s[s.length() - 1] == '\"') {
       stringstream tmp_stream;
-      tmp_stream << "string_" << (str_ind++)/2;
+      tmp_stream << "string_" << str_ind % 2;
+      str_ind++;
       node *n = N("string", s);
       n->ref_var = tmp_stream.str();
 	  return n;
