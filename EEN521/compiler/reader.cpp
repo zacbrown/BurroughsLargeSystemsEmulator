@@ -69,8 +69,8 @@ string reader::read(string comment)
    while (c == ' ')
       c = getchar(); 
    startpos = pos-1;
-   if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z' || c >= '0' && c <= '9')
-    { while (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z' || c >= '0' && c <= '9')
+   if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z' || c >= '0' && c <= '9' || c == '_')
+    { while (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z' || c >= '0' && c <= '9' || c == '_')
        { result += c;
          c = getchar(); }
       putback1char();

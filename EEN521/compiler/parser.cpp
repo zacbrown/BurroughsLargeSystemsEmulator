@@ -385,10 +385,9 @@ node * parse_const(reader & input)
         tmp->value = string_to_int(s);
         n->add(tmp);
         input >> s;
-        if (s == ",") continue;
-        else if (s == ";") break;
-        else input.error("const statement did not end properly");
+        if (s != ",") break;
     }
+    input.putbacksymbol();
     return n;
 }
 

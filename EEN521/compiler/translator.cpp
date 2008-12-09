@@ -467,7 +467,7 @@ void node::translatestatement()
          if ( size != 0 ) {
             kind = 'L';
             if (size < 0) {
-                symbolinfo * s = ST.lookup(ref_var);
+                symbolinfo * s = ST.lookup(part[i]->ref_var);
                 if (s->kind == 'u') {
                     cout << "Error: undeclared const referenced in size declaration of local array\n";
                     exit(0);
