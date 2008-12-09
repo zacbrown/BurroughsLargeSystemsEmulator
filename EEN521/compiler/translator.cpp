@@ -771,8 +771,8 @@ static void write_static_malloc_labels(void) {
 
 static void write_labels(void) {
     write_string_labels();
-    write_import_export_labels();
     write_static_malloc_labels();
+    write_import_export_labels();   
 }
 
 void node::translate_program()
