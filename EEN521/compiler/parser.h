@@ -15,7 +15,7 @@ struct node
 	
    node * add(node *n);
    void print(int indent=0);
-   void translateexpression(int reg);
+   void translateexpression(int reg, bool must_be_var=false);
    void translate_assembly(void);
    void translatejumpiffalse(int where, int reg);
    void translatejumpiftrue(int where, int reg);

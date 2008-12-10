@@ -238,8 +238,8 @@ void node::translatejumpiftrue(int where, int reg)
 
 
 
-void node::translateexpression(int reg)
- { if (tag == "variable")
+void node::translateexpression(int reg, bool must_be_var)
+ { if (tag == "const_or_var")
     { symbolinfo * s = ST.lookup( detail );
       string sign = "";
       if (s->info>=0)
@@ -254,6 +254,8 @@ void node::translateexpression(int reg)
          fout << "     LOAD   R" << reg << ", [g_" << detail << "]\n";
       else if (s->kind=='G')
          fout << "     LOAD   R" << reg << ", g_" << detail << "\n";
+      else if (s->kind=='c' && must_be_var == false)
+         fout << "     LOAD   R" << reg << ", " << s->info << endl;
       else if (s->kind=='f')
          fout << "     LOAD   R" << reg << ", f_" << detail << "]\n"; }
      
@@ -282,7 +284,7 @@ void node::translateexpression(int reg)
    }
 
    else if(tag == "binop")
-    { part[0]->translateexpression(reg);
+    { part[0]->translateexpression(reg, must_be_var);
       part[1]->translateexpression(reg+1);
       if (detail == "+")
          fout << "     ADD    R" << reg << ", R" << (reg+1) << "\n";
@@ -324,10 +326,10 @@ void node::translateexpression(int reg)
 	   for (int i = reg - 1; i > 0; i--)
 		   fout << "     PUSH   R" << i << endl;
 	   for (int i = value - 1; i >= 0; i--)
-	   {
-		   part[i]->translateexpression(1);
+	   {   
+           part[i]->translateexpression(1);
 		   fout << "     PUSH   R1\n";
-	   }
+       }
 	   fout << "     CALL   f_" << detail << endl;
 	   fout << "     ADD    SP, " << value << endl;
 	   for (int i = 1; i < reg; i++)
@@ -404,7 +406,7 @@ void node::translatestatement()
 
 	else if(tag == "assign_ptr")
     { part[1]->translateexpression(1);
-      part[0]->translateexpression(2);
+      part[0]->translateexpression(2, true);
 	  fout << "     STORE  R1, [R2]\n"; }
 
    else if(tag == "print")

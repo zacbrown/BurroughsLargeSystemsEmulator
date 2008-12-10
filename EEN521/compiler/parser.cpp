@@ -90,16 +90,13 @@ node * parse_statement( reader & input )
 	   input >> s;
 
 	   if (s == "(") {
-		   input >> s;
+           input.putbacksymbol();
 		   n->add(parse_expression(input));
-		   input >> s;
-		   if (s != ")")
-			   input.error("pointer reference has syntactical error, no trailing ')'");
 	   }
 	   else {
            input.putbacksymbol();
 		   node *tmp = parse_expression(input);
-		   if (tmp->tag != "variable") input.error("invalid pointer reference");
+		   if (tmp->tag != "const_or_var") input.error("invalid pointer reference");
 		   n->add(tmp);
 	   }
 
@@ -156,9 +153,13 @@ node * parse_statement( reader & input )
          if (s == ")")
             break;
          else{
-            input.putbacksymbol();
-            n->add(parse_expression(input));
-			num_args++;
+             if (isdigit(s[0])) {
+                input.putbacksymbol();
+                n->add(parse_expression(input));
+             }
+             else
+                n->add(N("const_or_var", s));
+			 num_args++;
          }
          input >> s;
          if( s != "," && s != ")")
@@ -177,7 +178,7 @@ node * parse_statement( reader & input )
 
     if (isalpha(s[0]))
      { node * n = N("assignment");
-       n->add(N("variable", s));
+       n->add(N("const_or_var", s));
        input >> s;
        if (s!="=")
          input.error("began with var but not assignment");
@@ -261,7 +262,7 @@ node * parse_top_level( reader & input )
          if (s == ")")
             break;
          else{
-            node *v = N("variable",s);
+            node *v = N("const_or_var",s);
             n->add(v);
 			num_args++;
          }
@@ -463,10 +464,17 @@ node * parse_expression( reader & input )
             input.error("not a name or a )");
          if (s == ")")
             break;
-         else{
-            input.putbacksymbol();
+         else{ input.putbacksymbol();
             n->add(parse_expression(input));
-			num_args++;
+#if 0
+             if (isdigit(s[0])) {
+                input.putbacksymbol();
+                n->add(parse_expression(input));
+             }
+             else
+                n->add(N("const_or_var", s));
+#endif
+			 num_args++;
          }
          input >> s;
 		 if( s != "," && s != ")") 
@@ -496,16 +504,13 @@ node * parse_expression( reader & input )
 	   input >> s;
 
 	   if (s == "(") {
-		   input >> s;
+           input.putbacksymbol();
 		   n->add(parse_expression(input));
-		   input >> s;
-		   if (s != ")")
-			   input.error("pointer reference has syntactical error, no trailing ')'");
 	   }
 	   else {
            input.putbacksymbol();
 		   node *tmp = parse_expression(input);
-		   if (tmp->tag != "variable") input.error("invalid pointer reference");           
+		   if (tmp->tag != "const_or_var") input.error("invalid pointer reference");           
 		   n->add(tmp);
 	   }
 	   return n;
@@ -514,7 +519,7 @@ node * parse_expression( reader & input )
    if (s == "&") {
 	   node *n = N("get_ptr");
 	   node *tmp = parse_expression(input);
-	   if (tmp->tag != "variable") input.error("invalid pointer reference");
+	   if (tmp->tag != "const_or_var") input.error("invalid pointer reference");
 	   n->add(tmp);
 	   return n;
    }
@@ -541,7 +546,7 @@ node * parse_expression( reader & input )
 	  return N("inchar");
 
    if (isalpha(s[0]))
-      return N("variable", s);
+      return N("const_or_var", s);
 
    if (s == "[")
     { string tag, detail = "";
