@@ -323,7 +323,7 @@ void node::translateexpression(int reg, bool must_be_var)
 
    else if (tag == "functioncall")
    {
-	   for (int i = reg - 1; i > 0; i--)
+	   for (int i = reg; i > 0; i--)
 		   fout << "     PUSH   R" << i << endl;
 	   for (int i = value - 1; i >= 0; i--)
 	   {   
@@ -361,9 +361,8 @@ void node::translateexpression(int reg, bool must_be_var)
 
 void node::translatestatement()
  { if(tag == "sequence")
-    { for(int i=0; i<part.size(); i++)
-       { fout << "\n";
-         part[i]->translatestatement(); } }
+   { for(int i=0; i<part.size(); i++)
+        part[i]->translatestatement(); }
 
    else if(tag == "assignment")
    { 
@@ -535,7 +534,7 @@ void node::translate_assembly(void) {
             else
                 formatted_str << "FP" << sign << s->info <<
                 detail.substr(close_bracket+1);
-            fout << format_assembly(formatted_str.str());
+            fout << format_assembly(formatted_str.str()) << endl;
         }
         else {
             cout << "Error: invalid embedded assembly\n";
@@ -545,7 +544,7 @@ void node::translate_assembly(void) {
     }
     else {
         formatted_str << detail;
-        fout << format_assembly(formatted_str.str());
+        fout << format_assembly(formatted_str.str()) << endl;
     }
 }
 
@@ -587,7 +586,9 @@ void node::translate_top_level()
 		fout << "\nf_" << detail << ":\n";
 		fout << "     PUSH   FP\n";
 		fout << "     LOAD   FP, SP\n";
-		fout << "     SUB    SP, " << value << endl;
+        if (value > 0)
+		    fout << "     SUB    SP, " << value << endl;
+        fout << endl;
 		for (int i = 0; i < value; i++)
 		{
 			int size = part[i]->value;
@@ -635,7 +636,8 @@ void node::translate_top_level()
 			if (part[0]->part[i]->tag == "local")
 				offset += part[0]->part[i]->part.size();
 		}
-		fout << "     SUB    SP, " << offset << endl;
+        if (offset > 0)
+		    fout << "     SUB    SP, " << offset << endl;
 		fout << "     LOAD   R1, [0x00000100]\n";
 		fout << "     STORE  R1, [g_MEMSTART]\n";
 		fout << "     LOAD   R1, [0x00000101]\n";
