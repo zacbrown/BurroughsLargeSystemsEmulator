@@ -616,6 +616,11 @@ void node::translate_top_level()
 				{
 					node* tmp = tmp_loc->part[k];
 					ST.remove_declaration(tmp->detail);
+                    if (tmp->value == -1) {
+                        symbolinfo *tmp_s = ST.lookup(tmp->ref_var);
+                        totalsize -= tmp_s->info;
+                    }
+                    else totalsize -= 1;
 				}
 			}
 		}
