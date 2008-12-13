@@ -295,6 +295,8 @@ void node::translateexpression(int reg, bool must_be_var)
          fout << "     MUL    R" << reg << ", R" << (reg+1) << "\n";
       else if (detail == "/")
          fout << "     DIV    R" << reg << ", R" << (reg+1) << "\n";
+      else if (detail == "%")
+         fout << "     MOD    R" << reg << ", R" << (reg+1) << "\n";
       else if (detail=="<=" || detail==">=" || detail=="<" || detail==">" || detail=="!=" ||
                detail=="=" || detail=="or" || detail=="and" || detail=="not")
        { int lab1 = labels+1;
