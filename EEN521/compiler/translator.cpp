@@ -50,6 +50,7 @@ void trans_set_output_file_stream(const char *filename)
 	fout.open(filename);
 }
 
+
 struct symbolinfo
  { char kind;
        // 'l' = local variable,  'L' = local array,
@@ -322,7 +323,7 @@ void node::translateexpression(int reg, bool must_be_var)
 	}
 
    else if (tag == "functioncall")
-   {
+   {   /* temp fix to store state of registers */
 	   for (int i = reg; i > 0; i--)
 		   fout << "     PUSH   R" << i << endl;
 	   for (int i = value - 1; i >= 0; i--)
@@ -331,11 +332,13 @@ void node::translateexpression(int reg, bool must_be_var)
 		   fout << "     PUSH   R1\n";
        }
 	   fout << "     CALL   f_" << detail << endl;
-	   fout << "     ADD    SP, " << value << endl;
-	   for (int i = 1; i < reg; i++)
+       if (value > 0)
+	       fout << "     ADD    SP, " << value << endl;
+	   for (int i = 1; i <= reg; i++) /* again a hack to restore state */
 		   fout << "     POP    R" << i << endl;
 	   if (reg != 0)
 		   fout << "     STORE  R0, R" << reg << endl;
+
    }
 
    else if (tag == "follow_ptr") {
@@ -586,7 +589,7 @@ void node::translate_top_level()
 		fout << "\nf_" << detail << ":\n";
 		fout << "     PUSH   FP\n";
 		fout << "     LOAD   FP, SP\n";
-        if (value > 0)
+        if (value == -25)
 		    fout << "     SUB    SP, " << value << endl;
         fout << endl;
 		for (int i = 0; i < value; i++)
