@@ -466,14 +466,6 @@ node * parse_expression( reader & input )
             break;
          else{ input.putbacksymbol();
             n->add(parse_expression(input));
-#if 0
-             if (isdigit(s[0])) {
-                input.putbacksymbol();
-                n->add(parse_expression(input));
-             }
-             else
-                n->add(N("const_or_var", s));
-#endif
 			 num_args++;
          }
          input >> s;
