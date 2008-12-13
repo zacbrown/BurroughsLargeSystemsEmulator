@@ -332,8 +332,10 @@ void node::translateexpression(int reg, bool must_be_var)
 		   fout << "     PUSH   R1\n";
        }
 	   fout << "     CALL   f_" << detail << endl;
+#if 0
        if (value > 0)
 	       fout << "     ADD    SP, " << value << endl;
+#endif
 	   for (int i = 1; i <= reg; i++) /* again a hack to restore state */
 		   fout << "     POP    R" << i << endl;
 	   if (reg != 0)
@@ -488,6 +490,7 @@ void node::translatestatement()
             size = 1;
 
          totalsize += size;
+         fout << "     SUB    SP, " << size << endl;
          ST.declare( name, kind, -totalsize ); } }
 
    else if (tag == "functioncall")
@@ -589,22 +592,33 @@ void node::translate_top_level()
 		fout << "\nf_" << detail << ":\n";
 		fout << "     PUSH   FP\n";
 		fout << "     LOAD   FP, SP\n";
-        if (value == -25)
-		    fout << "     SUB    SP, " << value << endl;
         fout << endl;
 		for (int i = 0; i < value; i++)
 		{
-			int size = part[i]->value;
+            int size = part[i]->value;
 			char kind = 'l';
-			if (size != 0)
-				kind = 'L';
+            if (size != 0)
+                kind = 'L';
 			else
 				size = 1;
 			offset += size;
 			ST.declare(part[i]->detail, kind, offset - size);
 		}
+#if 0
+        /* begin C89 stuff */
+        vector<node *> seq_part = part[value]->part;
+        for (int i = 0; i < seq_part.size(); i++) {
+            if (seq_part[i]->tag == "local") {
+                vector<node *> tmp_part = seq_part[i]->part;
+                for (j = 0; j < tmp_part.size(); j++) {
+                    if (0)
+                    fout << "     SUB    SP, " << offset << endl;
+                }
+            }
+        }
+#endif
 		part[value]->translatestatement();
-
+        
 		/* remove argument declarations */
 		for (int i = 0; i < value; i++)
 			ST.remove_declaration(part[i]->detail);
@@ -628,6 +642,7 @@ void node::translate_top_level()
 				}
 			}
 		}
+        
 	}
 	else if (tag == "main")
 	{
