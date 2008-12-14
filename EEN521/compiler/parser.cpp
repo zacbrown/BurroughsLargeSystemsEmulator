@@ -492,6 +492,12 @@ node * parse_expression( reader & input )
       return n;
     }
 
+    if (s == "neg") {
+        node *n = N("neg");
+        n->add(parse_expression(input));
+        return n;
+    }
+
     if (s == "mallocStat") {
         node *n = N("malloc_stat");
         input >> s;

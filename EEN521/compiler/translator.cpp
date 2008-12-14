@@ -263,8 +263,12 @@ void node::translateexpression(int reg, bool must_be_var)
    else if(tag == "number")
       fout << "     LOAD   R" << reg << ", " << value << "\n";
 
+   else if(tag == "neg") {
+       part[0]->translateexpression(1);
+       fout << "     MUL    R1, -1\n";
+   }
+
    else if(tag == "malloc_stat") {
-       int num_val;
        stringstream sout;
        sout << "static_malloc_" << static_malloc_write_list.size();
        string label = sout.str();
