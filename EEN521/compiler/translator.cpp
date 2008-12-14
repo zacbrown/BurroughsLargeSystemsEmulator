@@ -6,6 +6,7 @@
 #include <string>
 #include <string.h>
 #include <stdio.h>
+#include <ctype.h>  
 #include <sstream>
 #include <fstream>
 #include "useful.h"
@@ -261,6 +262,24 @@ void node::translateexpression(int reg, bool must_be_var)
          fout << "     LOAD   R" << reg << ", " << s->info << endl;
       else if (s->kind=='f')
          fout << "     LOAD   R" << reg << ", f_" << detail << "]\n"; }
+   
+   else if(tag == "stringindex"){
+	  part[0]->translateexpression(reg);
+	  string name;
+	  symbolinfo * s = ST.lookup(part[1]->detail);
+	  if (s->kind != 'L' || s->kind != 'G') {
+           cout << "Error: Only arrays are strings that can be edited. \n";
+           exit(0);
+      }
+      name = s->info;
+	  fout << "     LDCH   R" << reg << ", " << name << "\n";
+   }
+
+   else if(tag == "string")
+   {
+	   int character = __toascii(detail[0]);
+	   fout << "     LOAD   R0, " << character << "\n";
+   }
      
    else if(tag == "number")
       fout << "     LOAD   R" << reg << ", " << value << "\n";
@@ -372,6 +391,19 @@ void node::translatestatement()
  { if(tag == "sequence")
    { for(int i=0; i<part.size(); i++)
         part[i]->translatestatement(); }
+
+   else if(tag == "stringindex"){
+	  part[0]->translateexpression(1);
+	  string name;
+	  symbolinfo * s = ST.lookup(part[1]->detail);
+	  if (s->kind != 'L' || s->kind != 'G') {
+           cout << "Error: Only arrays are strings that can be edited. \n";
+           exit(0);
+      }
+      name = s->info;
+	  part[2]->translateexpression(0);
+	  fout << "     STCH   R1, " << name << "\n";
+   }
 
    else if(tag == "assignment")
    { 
