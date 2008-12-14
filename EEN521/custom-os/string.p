@@ -17,14 +17,15 @@ export function strcpy, strcut, strcat;
 function strcpy(stringin, stringout, start_offset, end_offset ) {
     local i, j;
     i = start_offset;
-	j = 0;
+    j = 0;
+    
     while ( i <= end_offset) do
     {
         char j of stringout = char i of stringin;
-		i = (i + 1);
-		j = (j + 1);
-	}
-	return 0
+        i = (i + 1);
+        j = (j + 1)
+    };
+    return 0
 }
 
 ##############################################################
@@ -39,24 +40,27 @@ function strcpy(stringin, stringout, start_offset, end_offset ) {
 #   * success - 0
 ##############################################################
 function strcut(stringin, stringout, start_offset, end_offset, stringin_size ) {
-	local i, j;
+    local i, j;
     i = start_offset;
-	j = 0;
+    j = 0;
     while ( i <= end_offset) do
-	{
-		char j of stringout = char i of stringin;
-		i = (i + 1);
-		j = (j + 1);
-	}
+    {
+        char j of stringout = char i of stringin;
+        i = (i + 1);
+        j = (j + 1)
+    };
     i = start_offset;
     j = end_offset;
-    while ( j < stringin_size && i < j ) do
+    if ( i < j) then
     {
-        char i of stringin = char j of stringin;
-        char j of stringin = 0;
-        i = (i + 1);
-		j = (j + 1);
-    }
+        while ( j < stringin_size ) do
+        {
+            char i of stringin = char j of stringin;
+            char j of stringin = 0;
+            i = (i + 1);
+            j = (j + 1)
+        }
+    };
     return 0
 }
 
@@ -75,12 +79,12 @@ function strcat(stringin, stringout, start_offset, end_offset,
         stringout_start) {
     local i, j;
     i = start_offset;
-	j = stringout_start;
+    j = stringout_start;
     while ( i <= end_offset) do
     {
         char j of stringout = char i of stringin;
-		i = (i + 1);
-		j = (j + 1);
-	}
-	return 0
+        i = (i + 1);
+        j = (j + 1)
+    };
+    return 0
 }
