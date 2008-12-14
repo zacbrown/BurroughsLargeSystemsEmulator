@@ -16,7 +16,7 @@ static int str_ind = 0;
 
 node * parse_statement( reader & input )
  { string s;
-   input >> s;
+   input >> s; cout << "st... " << s << endl;
    if (s == "print")
     { node *n = N("print");
       n->add(parse_expression(input));
@@ -178,11 +178,17 @@ node * parse_statement( reader & input )
 
     if (isalpha(s[0]))
      { node * n = N("assignment");
+       bool is_neg = false;
        n->add(N("const_or_var", s));
        input >> s;
        if (s!="=")
          input.error("began with var but not assignment");
+       input >> s;
+       if (s == "-")
+           is_neg = true;
+       else input.putbacksymbol();
        n->add(parse_expression(input));
+       n->part[1]->value *= -1;
        return n; }
 
    if (s == "{")
@@ -432,7 +438,7 @@ node * parse(reader & input)
 
 node * parse_expression( reader & input )
  { string s;
-   input >> s;
+   input >> s; cout << "se... " << s << endl;
    if (isdigit(s[0]))
     { int value = string_to_int(s);
       return N("number", "", value); }
