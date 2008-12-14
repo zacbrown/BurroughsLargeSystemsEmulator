@@ -375,6 +375,7 @@ node * parse_top_level( reader & input )
 node * parse_const(reader & input)
 {
     string s;
+    bool is_neg = false;
     node *n = N("const");
 
     while (true) {
@@ -386,7 +387,13 @@ node * parse_const(reader & input)
         input >> s;
         if (s != "=") input.error("invalid const declaration");
         input >> s;
+        if (s[0] == '-') {
+            is_neg = true;
+            input >> s;
+        }
+        if (!isdigit(s[0])) input.error("Named constants must be of numeric value.");
         tmp->value = string_to_int(s);
+        if (is_neg) tmp->value *= -1;
         n->add(tmp);
         input >> s;
         if (s != ",") break;
