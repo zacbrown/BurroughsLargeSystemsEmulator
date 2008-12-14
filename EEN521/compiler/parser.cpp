@@ -16,7 +16,7 @@ static int str_ind = 0;
 
 node * parse_statement( reader & input )
  { string s;
-   input >> s; cout << "st... " << s << endl;
+   input >> s;
    if (s == "print")
     { node *n = N("print");
       n->add(parse_expression(input));
@@ -438,7 +438,7 @@ node * parse(reader & input)
 
 node * parse_expression( reader & input )
  { string s;
-   input >> s; cout << "se... " << s << endl;
+   input >> s;
    if (isdigit(s[0]))
     { int value = string_to_int(s);
       return N("number", "", value); }
