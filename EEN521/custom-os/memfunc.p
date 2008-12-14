@@ -2,7 +2,7 @@
 # Date: 12.13.08
 # Filename: memfunc.p
 
-export function memCopy, memCompare;
+export function memCopy, memCompare, memSet;
 
 ##############################################################
 # memCopy: copy specified number of words from ptr1 to ptr2
@@ -48,4 +48,24 @@ function memCompare(memA, memB, num_words) {
     return 0
 }
 
+##############################################################
+# memSet: set specified memory location up to *range* to value
+# * arg 1: pointer to memory location
+# * arg 2: value to set memory to
+# * arg 3: number of words to set
+# * returns: 
+#   * failure - -1
+#   * success - 0
+##############################################################
+
+function memSet(memLoc, set_value, num_words) {
+    local ind;
+    ind = 0;
+    
+    while (ind < num_words) do {
+        *(memLoc + ind) = set_value;
+        ind = (ind + 1)
+    };
+    return 0
+}
 end
