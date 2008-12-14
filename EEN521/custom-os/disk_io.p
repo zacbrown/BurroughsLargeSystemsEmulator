@@ -21,7 +21,6 @@ const sizeof_rw_control_struct = 5, sizeof_size_control_struct = 3;
 function diskRead(driveNum, numBlocksToRead, firstBlockNumber, addrStoreData) {
     local control_struct:sizeof_rw_control_struct;
     <| LOAD R2, <control_struct>;
-    #<| LOAD R2, <rw_control_struct>;
     <| LOAD R1, $READDISC;
     <| STORE R1, [R2];
     <| LOAD R1, [<driveNum>];
@@ -54,14 +53,10 @@ function diskWrite(driveNum, numBlocksToWrite, firstBlockNumber, addrWriteData) 
     <| LOAD R2, <control_struct>;
     <| LOAD R1, $WRITEDISC;
     <| STORE R1, [R2];
-    <| LOAD R1, [<driveNum>];
-    <| STORE R1, [R2+1];
-    <| LOAD R1, [<numBlocksToWrite>];
-    <| STORE R1, [R2+2];
-    <| LOAD R1, [<firstBlockNumber>];
-    <| STORE R1, [R2+3];
-    <| LOAD R1, [<addrWriteData>];
-    <| STORE R1, [R2+4];
+    *(control_struct + 1) = driveNum;
+    *(control_struct + 2) = numBlocksToWrite;
+    *(control_struct + 3) = firstBlockNumber;
+    *(control_struct + 4) = addrWriteData;
     <| DOIO R0, <control_struct>;
     return
 }
@@ -80,10 +75,8 @@ function diskSize(driveNum) {
     <| LOAD R2, <control_struct>;
     <| LOAD R1, $SIZEDISC;
     <| STORE R1, [R2];
-    <| LOAD R1, [<driveNum>];
-    <| STORE R1, [R2+1];
-    <| LOAD R1, 0;
-    <| STORE R1, [R2+2];
+    *(control_struct + 1) = driveNum;
+    *(control_struct + 2) = 0;
     <| DOIO R0, <control_struct>;
     return
 }
