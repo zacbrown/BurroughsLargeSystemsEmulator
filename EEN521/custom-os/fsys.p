@@ -23,6 +23,8 @@
 #
 ####################################################
 
+import function diskRead, diskWrite, diskSize, memCopy;
+
 # struct sizes
 const   sizeof_superblock_s = 8,
         sizeof_file_entry_s = 8,
@@ -48,3 +50,30 @@ const   type                = 0,
 const   INODE_EOF           = -1,
         INODE_FREE          = 0,
         USED                = 1;
+
+# various consts
+const   block_size          = 128;
+
+##############################################################
+# readSuperBlock: read superblock from specified disk
+# * arg 1: disk drive number
+# * arg 2: pointer to place to store superblock
+# * returns: 
+#   * failure - error code if one occured
+#       * -2 : memory problem, reading or writing
+#       * -3 : invalid disk drive number
+#       * -4 : invalid block number
+#   * success - 0
+##############################################################
+
+function fsys_readSuperBlock(driveNum, storeAddress) {
+    local store_block:block_size, ret;
+    ret = call diskRead(driveNum, 1, 1, store_block);
+    
+    if (ret = 1) then
+        ret = call memCopy(storeAddress, store_block, sizeof_superblock_s);
+    
+    return ret
+}
+        
+end
