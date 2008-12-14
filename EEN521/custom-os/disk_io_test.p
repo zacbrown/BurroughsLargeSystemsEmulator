@@ -5,7 +5,7 @@
 import function diskSize, diskRead, diskWrite;
 import function isErrorSet;
 
-const first_block=15, store_size=128, num_blocks=1, disk_num = 1;
+const first_block=0, store_size=128, num_blocks=1, disk_num = 1;
 
 function test_Size() {
     local ret, error, disk_num;
@@ -51,6 +51,7 @@ function test_Read() {
 
 main {
     call test_Size();
+    call test_Write();
     call test_Read();
     return
 }
