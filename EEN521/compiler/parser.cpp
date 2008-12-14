@@ -47,6 +47,9 @@ node * parse_statement( reader & input )
    if (s == "halt")
       return N("halt");
 
+   if (s == "break")
+      return N("break");
+
    if (s=="while")
     { node * n = N("while");
       n->add(parse_expression(input));
@@ -515,7 +518,7 @@ node * parse_expression( reader & input )
 	   node *n = N("follow_ptr");
 	   input >> s;
 
-	   if (s == "(") {
+       if (s == "(") {
            input.putbacksymbol();
 		   n->add(parse_expression(input));
 	   }

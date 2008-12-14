@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <stack>
 #include <string>
 #include <string.h>
 #include <stdio.h>
@@ -26,6 +27,7 @@ typedef struct str_label_s {
 vector<str_label_t> string_label_list;
 vector<string> import_export_write_list;
 vector<string> static_malloc_write_list;
+stack<int> break_label_stack;
 
 static string format_assembly(string line) {
 	int i = 0;
@@ -415,6 +417,11 @@ void node::translatestatement()
       part[0]->translateexpression(2, true);
 	  fout << "     STORE  R1, [R2]\n"; }
 
+    else if (tag == "break") {
+      fout << "     JUMP   L" << break_label_stack.top() << endl;
+      break_label_stack.pop();
+    }
+
    else if(tag == "print")
     { part[0]->translateexpression(1);
       fout << "     FAKEIT R1, $printint\n"; }
@@ -441,7 +448,10 @@ void node::translatestatement()
       labels+=2;
       fout << "L" << lab1 << ":\n";
       part[0]->translatejumpiffalse(lab2, 1);
+      break_label_stack.push(lab2);
       part[1]->translatestatement();
+      if (break_label_stack.size() > 0 && break_label_stack.top() == lab2) 
+          break_label_stack.pop();
       fout << "     JUMP   L" << lab1 << "\n";
       fout << "L" << lab2 << ":\n"; }
 
