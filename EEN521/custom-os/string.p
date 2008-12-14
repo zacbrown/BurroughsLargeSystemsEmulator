@@ -2,7 +2,7 @@
 # Date: 12.14.08
 # Filename: string.p
 
-export function strcpy, strcut;
+export function strcpy, strcut, strappend;
 
 ##############################################################
 # strcpy: copies a string to another string from start to end offsets
@@ -60,3 +60,27 @@ function strcut(stringin, stringout, start_offset, end_offset, stringin_size ) {
     return 0
 }
 
+##############################################################
+# strappend: adds a string to another string from start to end offsets
+# * arg 1: string to be copied FROM
+# * arg 2: string to be added TO
+# * arg 3: starting char position for stringin
+# * arg 4: ending char position for stringin
+# * arg 5: char position to start append on stringout
+# * returns: 
+#   * failure - 0
+#   * success - 0
+##############################################################
+function strappend(stringin, stringout, start_offset, end_offset, 
+        stringout_start) {
+    local i, j;
+    i = start_offset;
+	j = stringout_start;
+    while ( i <= end_offset) do
+    {
+        char j of stringout = char i of stringin;
+		i = (i + 1);
+		j = (j + 1);
+	}
+	return 0
+}
