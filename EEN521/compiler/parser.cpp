@@ -149,7 +149,7 @@ node * parse_statement( reader & input )
       while(true){
          input >> s;
          if ( !isalpha(s[0]) && s != ")" && !isdigit(s[0]))
-            input.error("not a name or a ) statement");
+            input.error("not a name or a ')' statement");
          if (s == ")")
             break;
          else{
@@ -167,7 +167,7 @@ node * parse_statement( reader & input )
          if( s == ")")
             break;
       }
-	  n->value = num_args;
+	  n->value = num_args; cout << "num_args... " << num_args << endl;
       return n; 
     }
 
@@ -188,7 +188,8 @@ node * parse_statement( reader & input )
            is_neg = true;
        else input.putbacksymbol();
        n->add(parse_expression(input));
-       n->part[1]->value *= -1;
+       if (is_neg)
+           n->part[1]->value *= -1;
        return n; }
 
    if (s == "{")
