@@ -25,6 +25,10 @@ void reader::reset()
 	in.seekg(0);
 }
 
+int reader::get_linenum(void) {
+    return line_num;
+}
+
 void reader::putback1char()
  { pos -= 1; }
 
@@ -115,11 +119,11 @@ string reader::read_string(string comment) {
 string reader::read_assembly(string comment) {
 	string result = "";
 	char c = ' ';
-	while (c != ';') {
+	while (pos != 0 && c != ';') {
 		result += c;
 		c = getchar();
-	} 
-	putback1char();
+    } cout << "result: " << result << endl;
+    if (c == ';') putback1char();
 	return result;
 }
 

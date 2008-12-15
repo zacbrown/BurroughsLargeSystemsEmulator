@@ -15,6 +15,7 @@ struct reader
 
    reader(istream &i); 
    char getchar();
+   int get_linenum(void);
    string read(string comment="");
    string read_assembly(string comment="");
    string read_string(string comment="");

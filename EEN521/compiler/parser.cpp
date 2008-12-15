@@ -15,7 +15,7 @@ using namespace std;
 static int str_ind = 0;
 
 node * parse_statement( reader & input )
- { string s;
+ { string s; 
    input >> s;
    if (s == "print")
     { node *n = N("print");
@@ -170,7 +170,7 @@ node * parse_statement( reader & input )
          if( s == ")")
             break;
       }
-	  n->value = num_args; cout << "num_args... " << num_args << endl;
+	  n->value = num_args;
       return n; 
     }
 
@@ -239,7 +239,7 @@ node * parse_else( reader & input )
 
 node * parse_block( reader & input )
  { string s;
-   input >> s;
+    input >> s;
    if (s != "{")
      input.error("Block required, but no '{'");
    node * result = N("sequence");
@@ -442,7 +442,7 @@ node * parse(reader & input)
 }
 
 node * parse_expression( reader & input )
- { string s;
+ { string s; 
    input >> s;
    if (isdigit(s[0]))
     { int value = string_to_int(s);
