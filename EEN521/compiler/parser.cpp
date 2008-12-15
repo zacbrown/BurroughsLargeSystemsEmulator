@@ -404,6 +404,7 @@ node * parse_const(reader & input)
         if (!isdigit(s[0])) input.error("Named constants must be of numeric value.");
         tmp->value = string_to_int(s);
         if (is_neg) tmp->value *= -1;
+        is_neg = false;
         n->add(tmp);
         input >> s;
         if (s != ",") break;
