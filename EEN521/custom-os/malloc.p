@@ -18,7 +18,7 @@ const   process_id = 0,
         alloc_size = 2;
 
 export function rmalloc, rmfree, malloc, free;
-import function memSet;
+import function memSet, setInterrupt;
         
 ##############################################################
 # rmalloc: used to allocate heap space for a process
@@ -28,14 +28,16 @@ import function memSet;
 #   * success - address of start of heap space
 ##############################################################
 function rmalloc(size) {
-    local ind_ptr, poss_len, ret, done, end_ptr;
+    local ind_ptr, poss_len, ret, done, end_ptr, new_size;
     ind_ptr = *HEAP_BASE_ADDR;
     done = 0;
     
     if (*ind_ptr != F_RM_MEM_FREE) then {
         if (*ind_ptr != F_RM_MEM_USED) then {
             *ind_ptr = F_RM_MEM_FREE;
-            *(ind_ptr + 1) = (*HEAP_MEM_MAX - 1) 
+            *(ind_ptr + 1) = ((*HEAP_MEM_MAX - ind_ptr) - 4);
+            *(*HEAP_MEM_MAX - 1) = F_RM_MEM_FREE;
+            *(*HEAP_MEM_MAX - 2) = *(ind_ptr + 1)
         }
     };
     
@@ -54,16 +56,20 @@ function rmalloc(size) {
     *ind_ptr = F_RM_MEM_USED;
     *(ind_ptr + 1) = size;
     end_ptr = ((ind_ptr + 2) + size);
-    printstr "end_ptr: ";
-    print end_ptr;
     *end_ptr = F_RM_MEM_USED;
     *(end_ptr - 1) = size;
 
     if (size < poss_len) then {
-        *(end_ptr + 1) = F_RM_MEM_FREE;
-        *(end_ptr + 2) = (poss_len - size);
-        end_ptr = ((ind_ptr + poss_len) + 1);
-        *end_ptr = (poss_len - size)
+        # set end of chunk to free
+        new_size = ((poss_len - size) - 4);
+        end_ptr = (end_ptr + 1);
+        *end_ptr = F_RM_MEM_FREE;
+        *(end_ptr + 1) = new_size;
+        
+        #update end block
+        end_ptr = (end_ptr + ((poss_len - size) - 2));
+        *end_ptr = F_RM_MEM_FREE;
+        *(end_ptr - 1) = new_size
     };
     
     return (ind_ptr + 2)
@@ -87,30 +93,56 @@ function rmfree(base, size) {
     *ind_ptr = F_RM_MEM_FREE;
 
     # make sure that we got the right size passed in
-    end_ptr = ((ind_ptr + 3) + size);
-    if (*end_ptr != size) then return neg 2;
-    
-    # check the end word to make sure its marked properly
-    end_ptr = (end_ptr + 1);
+    end_ptr = ((ind_ptr + 2) + size);
+    if (*(end_ptr - 1) != size) then return neg 2;
     if (*end_ptr != F_RM_MEM_USED) then return neg 1;
     *end_ptr = F_RM_MEM_FREE;
-        
-    # see if we can merge ourself to the block before
-    if (ind_ptr != *HEAP_BASE_ADDR) then {
+    printstr "\nend_ptr: ";
+    print end_ptr;
+    
+    # see if we can merge ourself to the free space before
+    if (ind_ptr > *HEAP_BASE_ADDR) then {
         merge_ptr = (ind_ptr - 1);
         if (*merge_ptr = F_RM_MEM_FREE) then {
             tmp_size = *(merge_ptr - 1);
-            new_size = ((size + tmp_size) + 2);
-            tmp_ptr = (merge_ptr - tmp_size);
-            if (*(tmp_ptr - 1) = F_RM_MEM_FREE) then { 
+            new_size = ((*(ind_ptr + 1) + tmp_size) + 4);
+            tmp_ptr = ((merge_ptr - tmp_size) - 2);
+            printstr "\ntmp_ptr2: "; print *tmp_ptr;
+            if (*tmp_ptr = F_RM_MEM_FREE) then {
                 *merge_ptr = 0;
-                *tmp_ptr = new_size;
+                *(merge_ptr + 1) = 0;
+                *(tmp_ptr + 1) = new_size;
                 *(end_ptr - 1) = new_size;
-                tmp_ptr = (tmp_ptr + 1);
-                call memSet(tmp_ptr, 0, new_size)
+                ind_ptr = tmp_ptr
             }
         }
     };
+    
+    # see if we can merge ourself to the free space after
+    if (end_ptr < (*HEAP_MEM_MAX - 1)) then {
+        merge_ptr = (end_ptr + 1);
+        if (*merge_ptr = F_RM_MEM_FREE) then {
+            tmp_size = *(merge_ptr + 1);
+            new_size = ((*(end_ptr - 1) + tmp_size) + 4);
+            tmp_ptr = ((merge_ptr + tmp_size) + 2);
+
+            if (*tmp_ptr = F_RM_MEM_FREE) then {
+                *(tmp_ptr - 1) = new_size;
+                *(ind_ptr + 1) = new_size;
+                tmp_ptr = (ind_ptr + 2);
+                new_size = (*(tmp_ptr - 1) - 2)
+            };
+            tmp_size = 196606;
+            printstr "\nsize: "; print *tmp_size;
+            printstr "\nind_ptr: "; print *ind_ptr;
+            printstr "\ntmp_ptr: "; print *tmp_ptr;
+            printstr "\nend_ptr: "; print *end_ptr;
+            printstr "\nmerge_ptr: "; print *merge_ptr
+        }
+    };
+    tmp_ptr = (ind_ptr + 2);
+    tmp_size = *(ind_ptr + 1);
+    call memSet(tmp_ptr, 0, tmp_size);
     
     return
 }
