@@ -2,10 +2,10 @@
 # Date: 12.13.08
 # Filename: memfunc.p
 
-export function memCopy, memCompare, memSet;
+export function memcpy, memcmp, memset;
 
 ##############################################################
-# memCopy: copy specified number of words from ptr1 to ptr2
+# memcpy: copy specified number of words from ptr1 to ptr2
 # * arg 1: pointer to destination
 # * arg 2: pointer to source
 # * arg 3: number of words to copy
@@ -14,7 +14,7 @@ export function memCopy, memCompare, memSet;
 #   * success - 0
 ##############################################################
 
-function memCopy(dest, source, num_words) {
+function memcpy(dest, source, num_words) {
     local ind;
     ind = 0;
 
@@ -26,7 +26,7 @@ function memCopy(dest, source, num_words) {
 }
 
 ##############################################################
-# memCompare: compared specified number of words from ptr1 to ptr2
+# memcmp: compared specified number of words from ptr1 to ptr2
 # * arg 1: pointer to memory location 1
 # * arg 2: pointer to memory location 2
 # * arg 3: number of words to compare
@@ -35,7 +35,7 @@ function memCopy(dest, source, num_words) {
 #   * success - 0
 ##############################################################
 
-function memCompare(memA, memB, num_words) {
+function memcmp(memA, memB, num_words) {
     local ind;
     ind = 0;
 
@@ -49,7 +49,7 @@ function memCompare(memA, memB, num_words) {
 }
 
 ##############################################################
-# memSet: set specified memory location up to *range* to value
+# memset: set specified memory location up to *range* to value
 # * arg 1: pointer to memory location
 # * arg 2: value to set memory to
 # * arg 3: number of words to set
@@ -58,11 +58,11 @@ function memCompare(memA, memB, num_words) {
 #   * success - 0
 ##############################################################
 
-function memSet(memLoc, set_value, num_words) {
-    local ind;
-    ind = 0;
+function memset(memLoc, set_value, num_words) {
+    local ind, end_ind;
+    ind = 0; end_ind = (num_words - 1);
     
-    while (ind < num_words) do {
+    while (ind < end_ind) do {
         *(memLoc + ind) = set_value;
         ind = (ind + 1)
     };
