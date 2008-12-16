@@ -1,8 +1,8 @@
-# Author: Shane Salta
+# Author: Shane Salta, Zac Brown
 # Date: 12.14.08
 # Filename: string.p
 
-export function strcpy, strcut, strcat, strlen;
+export function strcpy, strcut, strcat, strlen, strchr, strrchr;
 
 ##############################################################
 # strcpy: copies a string to another string from start to end offsets
@@ -103,6 +103,47 @@ function strlen(stringin) {
         ind = (ind + 1)
     };
     
+    return ind
+}
+
+##############################################################
+# strrchr: find first occurence of specified character starting at end
+# * arg 1: string to find character in
+# * arg 2: character to search for
+# * returns:
+#   * failure - -1
+#   * success - first location of character
+##############################################################
+function strrchr(stringin, search_char) {
+    local ind;
+    ind = call strlen(stringin);
+    ind = (ind - 1);
+    while (char ind of stringin != char 0 of search_char) do {
+        ind = (ind - 1);
+        if (ind = neg 1) then return neg 1
+    };
+    
+    return ind
+}
+
+##############################################################
+# strchr: find first occurence of specified character starting at beginning
+# * arg 1: string to find character in
+# * arg 2: character to search for
+# * returns:
+#   * failure - -1
+#   * success - first location of character
+##############################################################
+function strchr(stringin, search_char) {
+    local ind, last;
+    ind = 0; 
+    last = call strlen(stringin);
+    
+    while (char ind of stringin != char 0 of search_char) do {
+        ind = (ind + 1);
+        if (ind = last) then return neg 1
+    };
+
     return ind
 }
 
