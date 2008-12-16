@@ -3,11 +3,14 @@
 # Filename: string.p
 
 export function strcpy, strcut, strcat, strlen, strchr, strrchr;
+export function strlen_word;
+import function memset;
 
 ##############################################################
 # strcpy: copies a string to another string from start to end offsets
 # * arg 1: string to be copied FROM
-# * arg 2: string to be copied TO
+# * arg 2: string to be copied TO, should have number of characters
+#          to copy + 1 space available
 # * arg 3: starting char position for stringin
 # * arg 4: ending char position for stringin
 # * returns: 
@@ -15,16 +18,18 @@ export function strcpy, strcut, strcat, strlen, strchr, strrchr;
 #   * success - 0
 ##############################################################
 function strcpy(stringin, stringout, start_offset, end_offset ) {
-    local i, j;
+    local i, j;1
     i = start_offset;
     j = 0;
     
-    while ( i <= end_offset) do
+    while (i <= end_offset) do
     {
         char j of stringout = char i of stringin;
         i = (i + 1);
         j = (j + 1)
     };
+    
+    char j of stringout = 0;
     return 0
 }
 
@@ -104,6 +109,23 @@ function strlen(stringin) {
     };
     
     return ind
+}
+
+##############################################################
+# strlen_word: get length of specified string in words
+# * arg 1: string to get length of
+# * returns:
+#   * failure - -1
+#   * success - length of string
+##############################################################
+function strlen_word(stringin) {
+    local ind;
+    ind = 0;
+    while (char ind of stringin != 0) do {
+        ind = (ind + 1)
+    };
+    
+    return ((ind / 4) + 1)
 }
 
 ##############################################################
