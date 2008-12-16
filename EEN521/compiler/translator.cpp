@@ -391,14 +391,17 @@ void node::translatestatement()
   
    else if(tag == "stringindex"){
       part[0]->translateexpression(3);
-      part[1]->translateexpression(2);
 	  part[2]->translateexpression(1);
+      part[1]->translateexpression(2);
       if (part[2]->tag == "string") {
           fout << "     LOAD   R0, 0\n";
           fout << "     LDCH   R0, R1\n";
 	      fout << "     STCH   R3, R2\n";
       }
-      else if (part[2]->tag == "const_or_var" || part[2]->tag == "stringindex") {
+      else if (part[2]->tag == "const_or_var" || 
+               part[2]->tag == "stringindex"  ||
+               part[2]->tag == "number") 
+      {
           fout << "     LOAD   R0, R1\n";
           fout << "     STCH   R3, R2\n";
       }
