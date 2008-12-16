@@ -29,6 +29,6 @@ int main(int argc, char **argv)
 
    node *prog = parse(in);
 
-   prog->print();
+   prog->print(); cout << endl;
    prog->translate_program();
    return 0; }

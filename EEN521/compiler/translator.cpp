@@ -330,7 +330,7 @@ void node::translateexpression(int reg, bool must_be_var)
       else
        { cout << "Error: Invalid expression binop node\n";
          print();
-         fout << "\n";
+         cout << "\n";
          exit(1); } }
 
 	else if (tag == "get_ptr") {
@@ -828,7 +828,7 @@ static void write_labels(void) {
 
 void node::translate_program()
 {
-    vector<string> function_list;
+    vector<string> function_list, global_list;
 
 	if (fout.is_open() == false) {
 		cout << "ERROR: no initialized filename for output\n";
@@ -845,6 +845,10 @@ void node::translate_program()
     for (int i = 0; i < part.size(); i++) {
         if (part[i]->tag == "functiondef")
             function_list.push_back(part[i]->detail);
+        if (part[i]->tag == "global") {
+            for (int j = 0; j < part[i]->part.size(); j++)
+                global_list.push_back(part[i]->part[j]->detail); 
+        }
     }
 
     for (int i = 0; i < part.size(); i++) {
@@ -853,9 +857,15 @@ void node::translate_program()
 
         if (part[i]->tag == "export") {
             vector<node*> n_part = part[i]->part;
-            for (int j = 0; j < n_part.size(); j++) {
+            for (int j = 0; j < n_part.size(); j++) { 
                 for (int k = 0; k < function_list.size(); k++) {
                     if (n_part[j]->detail == function_list[k]) {
+                        found = true;
+                        break;
+                    }
+                }
+                for (int k = 0; k < global_list.size(); k++) {
+                    if (n_part[j]->detail == global_list[k]) {
                         found = true;
                         break;
                     }
