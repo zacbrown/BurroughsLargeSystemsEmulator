@@ -55,7 +55,7 @@ function keyboard_interrupt( ) {
          {
              printstr "ERROR: Reading in from keyboard: ";
              print readin;
-             <| HALT;
+             <| HALT
          };
          
          if (readin != 0) then
