@@ -393,9 +393,16 @@ void node::translatestatement()
       part[0]->translateexpression(3);
       part[1]->translateexpression(2);
 	  part[2]->translateexpression(1);
-      fout << "     LOAD   R0, 0\n";
-      fout << "     LDCH   R0, R1\n";
-	  fout << "     STCH   R3, R2\n";
+      if (part[2]->tag == "string") {
+          fout << "     LOAD   R0, 0\n";
+          fout << "     LDCH   R0, R1\n";
+	      fout << "     STCH   R3, R2\n";
+      }
+      else if (part[2]->tag == "const_or_var" || part[2]->tag == "stringindex") {
+          fout << "     LOAD   R0, R1\n";
+          fout << "     STCH   R3, R2\n";
+      }
+      else cout << "Error: invalid assignment for char index of string, tag was '" << part[2]->tag << "'\n";
    }
 
    else if(tag == "assignment")
