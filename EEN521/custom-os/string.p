@@ -3,7 +3,7 @@
 # Filename: string.p
 
 export function strcpy, strcut, strcat, strlen, strchr, strrchr;
-export function strlen_word;
+export function strlen_word, strcmp;
 import function memset;
 
 ##############################################################
@@ -18,7 +18,7 @@ import function memset;
 #   * success - 0
 ##############################################################
 function strcpy(stringin, stringout, start_offset, end_offset ) {
-    local i, j;1
+    local i, j;
     i = start_offset;
     j = 0;
     
@@ -34,12 +34,33 @@ function strcpy(stringin, stringout, start_offset, end_offset ) {
 }
 
 ##############################################################
-# strcpy: cuts a string to another string from start to end offsets
-# * arg 1: string to be cut FROM
-# * arg 2: string to be pasted TO
-# * arg 3: starting char position for stringin
-# * arg 4: ending char position for stringin
-# * arg 5: total size of stringin
+# strcmp: compare specified number of charactesr between two strings
+# * arg 1: string 1
+# * arg 2: string 2
+# * arg 3: number of characters to compare
+# * returns: 
+#   * string 1 lexicographically less than string 2     : -1
+#   * string 1 lexicographically equal to string 2      :  0
+#   * string 1 lexicographically greater than string 2  :  1
+##############################################################
+function strcmp(stringA, stringB, num_chars) {
+    local i; 
+    i = 0;
+        
+    while (i < num_chars) do {
+        if (char i of stringA < char i of stringB) then return neg 1;
+        if (char i of stringA > char i of stringB) then return 1;
+        i = (i + 1)
+    };
+    
+    return 0
+}
+
+##############################################################
+# strcmp: compare specified number of charactesr between two strings
+# * arg 1: string 1
+# * arg 2: string 2
+# * arg 3: number of characters to compare
 # * returns: 
 #   * failure - 0
 #   * success - 0
