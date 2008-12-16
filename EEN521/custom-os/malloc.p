@@ -213,6 +213,7 @@ function malloc(size, proc_ctrl_block) {
 #   * failure - error code in one of following occured:
 #       * -1 : invalid base address
 #       * -2 : invalid size
+#       * -3 : no heap space available
 #   * success - address of start of heap space
 ##############################################################
 
