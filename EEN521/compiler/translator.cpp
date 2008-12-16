@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>  
+#include <iomanip>
 #include <sstream>
 #include <fstream>
 #include "useful.h"
@@ -269,8 +270,16 @@ void node::translateexpression(int reg, bool must_be_var)
 	  fout << "     LDCH   R" << reg << ", R" << (reg+1) << "\n";
    }
      
-   else if(tag == "number")
-      fout << "     LOAD   R" << reg << ", " << value << "\n";
+   else if(tag == "number") {
+      if (value > 32767 || value < -32767) {
+          int val;
+          val = value & 0xffff;
+          fout << "     LOAD   R" << reg << ", " << val << endl;
+          val = value >> 16;
+          fout << "     LOADH  R" << reg << ", " << val << endl; 
+      }
+      else fout << "     LOAD   R" << reg << ", " << value << endl;
+   }
 
    else if(tag == "neg") {
        part[0]->translateexpression(1);
