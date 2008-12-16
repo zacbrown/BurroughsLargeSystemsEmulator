@@ -19,14 +19,16 @@ int main(int argc, char **argv)
    reader in (infile);
    char *new_filename = strdup(argv[1]);
    char *dot_delim = strrchr(new_filename, '.');
-   dot_delim++;
-   *dot_delim = 's';
+   if (dot_delim != NULL) {
+       dot_delim++;
+       *dot_delim = 's';
+   }
+   else strcat(new_filename, ".s");
     
    trans_set_output_file_stream(new_filename);
 
    node *prog = parse(in);
 
    prog->print();
-   cout << endl;
    prog->translate_program();
    return 0; }

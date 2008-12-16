@@ -122,7 +122,7 @@ string reader::read_assembly(string comment) {
 	while (pos != 0 && c != ';') {
 		result += c;
 		c = getchar();
-    } cout << "result: " << result << endl;
+    }
     if (c == ';') putback1char();
 	return result;
 }
