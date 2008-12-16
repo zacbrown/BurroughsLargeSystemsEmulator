@@ -18,7 +18,7 @@ const   process_id = 0,
         alloc_size = 2;
 
 export function rmalloc, rmfree, malloc, free;
-import function memSet, setInterrupt;
+import function memset, setInterrupt;
         
 ##############################################################
 # rmalloc: used to allocate heap space for a process
@@ -97,9 +97,7 @@ function rmfree(base, size) {
     if (*(end_ptr - 1) != size) then return neg 2;
     if (*end_ptr != F_RM_MEM_USED) then return neg 1;
     *end_ptr = F_RM_MEM_FREE;
-    printstr "\nend_ptr: ";
-    print end_ptr;
-    
+
     # see if we can merge ourself to the free space before
     if (ind_ptr > *HEAP_BASE_ADDR) then {
         merge_ptr = (ind_ptr - 1);
@@ -107,7 +105,7 @@ function rmfree(base, size) {
             tmp_size = *(merge_ptr - 1);
             new_size = ((*(ind_ptr + 1) + tmp_size) + 4);
             tmp_ptr = ((merge_ptr - tmp_size) - 2);
-            printstr "\ntmp_ptr2: "; print *tmp_ptr;
+            
             if (*tmp_ptr = F_RM_MEM_FREE) then {
                 *merge_ptr = 0;
                 *(merge_ptr + 1) = 0;
@@ -131,18 +129,12 @@ function rmfree(base, size) {
                 *(ind_ptr + 1) = new_size;
                 tmp_ptr = (ind_ptr + 2);
                 new_size = (*(tmp_ptr - 1) - 2)
-            };
-            tmp_size = 196606;
-            printstr "\nsize: "; print *tmp_size;
-            printstr "\nind_ptr: "; print *ind_ptr;
-            printstr "\ntmp_ptr: "; print *tmp_ptr;
-            printstr "\nend_ptr: "; print *end_ptr;
-            printstr "\nmerge_ptr: "; print *merge_ptr
+            }
         }
     };
     tmp_ptr = (ind_ptr + 2);
     tmp_size = *(ind_ptr + 1);
-    call memSet(tmp_ptr, 0, tmp_size);
+    call memset(tmp_ptr, 0, tmp_size);
     
     return
 }
@@ -155,47 +147,61 @@ function rmfree(base, size) {
 #   * failure - -1
 #   * success - address of start of heap space
 ##############################################################
-
 function malloc(size, proc_ctrl_block) {
     local proc_heap_size, proc_heap_base, ind_ptr, done, poss_len;
-    local end_ptr;
+    local end_ptr, new_size;
+    
     proc_heap_size = *(proc_ctrl_block + alloc_size);
     proc_heap_base = *(proc_ctrl_block + base_addr);
-    
     ind_ptr = proc_heap_base;
     done = 0;
     
-    # heaps do not grow yet
-    if (((ind_ptr + 2) + size) > proc_heap_size) then {
+    if (*ind_ptr != F_PM_MEM_FREE) then {
+        if (*ind_ptr != F_PM_MEM_USED) then {
+            *ind_ptr = F_PM_MEM_FREE;
+            *(ind_ptr + 1) = (proc_heap_size - 4);
+            *((proc_heap_base + proc_heap_size) - 1) = F_PM_MEM_FREE;
+            *((proc_heap_size + proc_heap_size) - 2) = *(ind_ptr + 1)
+        }
+    };
+    
+    if ((*(ind_ptr + 2) + size) > proc_heap_size) then {
         printstr "FIXME: expand heap\n";
         return neg 1
     };
     
     while (done = 0) do {
+    
         while (*ind_ptr != F_PM_MEM_FREE) do {
             ind_ptr = (ind_ptr + 1)
         };
         poss_len = *(ind_ptr + 1);
         end_ptr = ((ind_ptr + poss_len) + 2);
-        
-        # enough space?
+
+        # is there enough space?
         if (poss_len >= size) then done = 1
     };
-
+    
     *ind_ptr = F_PM_MEM_USED;
     *(ind_ptr + 1) = size;
-    end_ptr = ((ind_ptr + 2) + size);
+    end_ptr = ((ind_ptr + 3) + size);
     *end_ptr = F_PM_MEM_USED;
     *(end_ptr - 1) = size;
-    
+
     if (size < poss_len) then {
-        *(end_ptr + 1) = F_PM_MEM_FREE;
-        *(end_ptr + 2) = (poss_len - size);
-        end_ptr = ((ind_ptr + poss_len) + 1);
-        *end_ptr = (poss_len - size)
+        # set end of chunk to free
+        new_size = ((poss_len - size) - 4);
+        end_ptr = (end_ptr + 1);
+        *end_ptr = F_PM_MEM_FREE;
+        *(end_ptr + 1) = new_size;
+        
+        # update end block
+        end_ptr = (end_ptr + ((poss_len - size) - 1));
+        *end_ptr = F_PM_MEM_FREE;
+        *(end_ptr - 1) = new_size
     };
     
-    return
+    return (ind_ptr + 2)
 }
 
 ##############################################################
@@ -209,6 +215,7 @@ function malloc(size, proc_ctrl_block) {
 #       * -2 : invalid size
 #   * success - address of start of heap space
 ##############################################################
+
 function free(base, size, proc_ctrl_block) {
     local ind_ptr, end_ptr, merge_ptr, new_size, tmp_size, tmp_ptr;
     local proc_heap_size, proc_heap_base;
@@ -222,29 +229,47 @@ function free(base, size, proc_ctrl_block) {
 
     # make sure that we got the right size passed in
     end_ptr = ((ind_ptr + 3) + size);
-    if (*end_ptr != size) then return neg 2;
-    
-    # check the end word to make sure its marked properly
-    end_ptr = (end_ptr + 1);
+    if (*(end_ptr - 1) != size) then return neg 2;
     if (*end_ptr != F_PM_MEM_USED) then return neg 1;
     *end_ptr = F_PM_MEM_FREE;
-        
-    # see if we can merge ourself to the block before
-    if (ind_ptr != proc_heap_base) then {
+
+    # see if we can merge ourself to the free space before
+    if (ind_ptr > proc_heap_base) then {
         merge_ptr = (ind_ptr - 1);
         if (*merge_ptr = F_PM_MEM_FREE) then {
             tmp_size = *(merge_ptr - 1);
-            new_size = ((size + tmp_size) + 2);
-            tmp_ptr = (merge_ptr - tmp_size);
-            if (*(tmp_ptr - 1) = F_PM_MEM_FREE) then { 
+            new_size = ((*(ind_ptr + 1) + tmp_size) + 4);
+            tmp_ptr = ((merge_ptr - tmp_size) - 2);
+            
+            if (*tmp_ptr = F_PM_MEM_FREE) then {
                 *merge_ptr = 0;
-                *tmp_ptr = new_size;
+                *(merge_ptr + 1) = 0;
+                *(tmp_ptr + 1) = new_size;
                 *(end_ptr - 1) = new_size;
-                tmp_ptr = (tmp_ptr + 1);
-                call memSet(tmp_ptr, 0, new_size)
+                ind_ptr = tmp_ptr
             }
         }
     };
+    
+    # see if we can merge ourself to the free space after
+    if (end_ptr < ((proc_heap_base + proc_heap_size) - 1)) then {
+        merge_ptr = (end_ptr + 1);
+        if (*merge_ptr = F_PM_MEM_FREE) then {
+            tmp_size = *(merge_ptr + 1);
+            new_size = ((*(end_ptr - 1) + tmp_size) + 4);
+            tmp_ptr = ((merge_ptr + tmp_size) + 3);
+
+            if (*tmp_ptr = F_PM_MEM_FREE) then {
+                *(tmp_ptr - 1) = new_size;
+                *(ind_ptr + 1) = new_size;
+                tmp_ptr = (ind_ptr + 2);
+                new_size = (*(tmp_ptr - 1) - 2)
+            }
+        }
+    };
+    tmp_ptr = (ind_ptr + 2);
+    tmp_size = *(ind_ptr + 1);
+    call memset(tmp_ptr, 0, tmp_size);
     
     return
 }
