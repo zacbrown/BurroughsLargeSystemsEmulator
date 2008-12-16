@@ -60,7 +60,8 @@ function keyboard_interrupt( ) {
          
          if (readin != 0) then
          {
-             printstr(buff, readin);
+             printstr buff;
+             printstr readin;
              if ((system_input_buffer_num + readin) >= 45) then
                  printstr "ERROR: Keyboard input buffer overflow \n"
              else {
@@ -69,8 +70,8 @@ function keyboard_interrupt( ) {
              }
          }
       };
-      return
-      #ireturn; #will be added by zac
+      
+      <| IRET
 }
 ##############################################################
 # getline: copies over keyboard_input_buffer to string passed through
@@ -83,9 +84,8 @@ function keyboard_interrupt( ) {
 #   * success - 0
 ##############################################################
 function getline(input_str, sizeof_str) {
-    local i, found;
-    i = 0;
-    found = 0;
+    local i, found, cont;
+    i = 0; found = 0;
     
     #this loop keeps running until it finds \n in the buffer
     while (found = 0) do
