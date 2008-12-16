@@ -2,7 +2,7 @@
 # Date: 12.14.08
 # Filename: string.p
 
-export function strcpy, strcut, strcat;
+export function strcpy, strcut, strcat, strlen;
 
 ##############################################################
 # strcpy: copies a string to another string from start to end offsets
@@ -88,3 +88,22 @@ function strcat(stringin, stringout, start_offset, end_offset,
     };
     return 0
 }
+
+##############################################################
+# strlen: get length of specified string
+# * arg 1: string to get length of
+# * returns:
+#   * failure - -1
+#   * success - length of string
+##############################################################
+function strlen(stringin) {
+    local ind;
+    ind = 0;
+    while (char ind of stringin != 0) do {
+        ind = (ind + 1)
+    };
+    
+    return ind
+}
+
+end
