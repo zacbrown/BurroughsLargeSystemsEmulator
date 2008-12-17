@@ -23,7 +23,8 @@
 #
 ####################################################
 
-import function diskRead, diskWrite, diskSize, memCopy;
+import function diskRead, diskWrite, diskSize, memcpy, strcmp, strcpy;
+import function strcut, strcat, strchr, strrchr, strlen_word;
 export function fsys_readSuperBlock, fsys_writeSuperBlock, fsys_listDirectory,
                 fsys_createFile, fsys_createDirectory, fsys_removeDirectory,
                 fsys_removeFile, fsys_fileAppend, fsys_fileOpen, fsys_fileClose;
@@ -33,26 +34,36 @@ const   sizeof_superblock_s = 8,
         sizeof_file_entry_s = 8,
         sizeof_inode_s      = 32;
 
-# superblock_s offsets        
-const   disk_id             = 0,
-        disk_name           = 1,
-        num_writable_blocks = 6,
-        root_dir_addr       = 7;
+# superblock_s offsets
+const   off_disk_id         = 0,
+        off_disk_name       = 1,
+        off_num_w_blocks    = 6,
+        off_root_dir_addr   = 7;
+
+# disk offsets in blocks
+# representative of the *first* block to use
+const   off_superblock      = 0,
+        off_filent          = 1,
+        off_inode           = 101; 
+        
+const   off_superblock_word = 0,
+        off_filent_word     = 128,
+        off_inode_word      = 12928;
         
 # file_ent_s offsets
-const   file_name           = 0,
-        is_directory        = 6,
-        first_inode         = 7;
-        
+const   off_file_name       = 0,
+        off_is_directory    = 6,
+        off_first_inode     = 7;
+
 # inode_s offsets
-const   type                = 0,
-        next_cluster        = 1,
-        data                = 2;
+const   off_type            = 0,
+        off_next_cluster    = 1,
+        off_data            = 2;
 
 # inode types
 const   INODE_EOF           = -1,
         INODE_FREE          = 0,
-        USED                = 1;
+        INODE_USED          = 1;
 
 # various consts
 const   block_size          = 128,
@@ -60,8 +71,10 @@ const   block_size          = 128,
         blk_num             = 0,
         blk_offset          = 1,
         disk_number         = 1,
-        inode_data_size     = 30;
-        
+        inode_data_size     = 30,
+        max_filename_word   = 6,
+        max_filename_len    = 24;
+
 const max_files_open = 15;
 global file_descriptor_array:max_files_open;
 global process_control_block:3;
@@ -71,7 +84,7 @@ global superblock_struct:sizeof_superblock_s;
 # fsys_readSuperBlock: read superblock from specified disk
 # * arg 1: disk drive number
 # * arg 2: pointer to place to store superblock
-# * returns: 
+# * returns:
 #   * failure - error code if one occured
 #       * -2 : memory problem, reading or writing
 #       * -3 : invalid disk drive number
@@ -82,10 +95,10 @@ global superblock_struct:sizeof_superblock_s;
 function fsys_readSuperBlock(driveNum, storeAddress) {
     local store_block:block_size, ret;
     ret = call diskRead(driveNum, 1, first_block, store_block);
-    
+
     if (ret = 1) then
-        ret = call memCopy(storeAddress, store_block, sizeof_superblock_s);
-    
+        ret = call memcpy(storeAddress, store_block, sizeof_superblock_s);
+
     return ret
 }
 
@@ -93,7 +106,7 @@ function fsys_readSuperBlock(driveNum, storeAddress) {
 # fsys_writeSuperBlock: write superblock to specified disk
 # * arg 1: disk drive number
 # * arg 2: pointer to place to copy superblock from
-# * returns: 
+# * returns:
 #   * failure - error code if one occured
 #       * -2 : memory problem, reading or writing
 #       * -3 : invalid disk drive number
@@ -112,87 +125,205 @@ function fsys_writeSuperBlock(driveNum, superBlockStruct) {
 
 ##############################################################
 # fsys_listDirectory: list files in specified path
-# * arg 1: disk drive number
-# * arg 2: path to list files in
-# * returns: 
+# * arg 1: path to list files in
+# * returns:
 #   * failure - error code if one occured
 #       * -2 : memory problem, reading or writing
 #       * -3 : invalid disk drive number
 #       * -4 : invalid block number
 #   * success - 0
 ##############################################################
-function fsys_listDirectory(driveNum, directoryPath) {
-    return
-}
-
-function getEntryLoc(path) {
-    local cur_inode, cur_filent_ind, block_offset_s:2, block_read_storage;
-    local ret, block_to_read, done, start_ind, end_ind, cur_ptr;
+function fsys_listDirectory(directoryPath) {
+    local dir_entry_loc, done, ind_ptr, inode_block_storage, ret;
+    local filent_block_storage, block_offset_s:2;
+    dir_entry_loc = call getEntryLoc(directoryPath);
     
-    ret = call strlen(path);
-    if (ret = 1) then {
-        ret = call strcmp(path, "/", 1);
-        if (ret = 0) then return *(superblock_struct + root_dir_addr)
+    if (dir_entry_loc = neg 1) then { 
+        printstr "ERROR: no such directory\n";
+        return
     };
     
-    # allocate memory for block being read 
-    block_read_storage = call malloc(128, process_control_block);
+    # initialize storage area
+    inode_block_storage = call malloc(128, process_control_block);
+    filent_block_storage = call malloc(128, process_control_block);
     
+    ret = call getBlockByAddress(dir_entry_loc, inode_block_storage);
+    if (ret != 1) then {
+        printstr "ERROR: unable to read block, possible memory error";
+        call free(filent_block_storage, 128, process_control_block);
+        call free(inode_block_storage, 128, process_control_block);
+        return
+    };
+    
+    printstr "\n"; printstr directoryPath;
+    ind_ptr = (inode_block_storage + off_data);
     done = 0;
-    cur_filent_ind = *(superblock_struct + root_dir_addr);
     while (done = 0) do {
-        # get directory/file entry address
-        call transAddrToBlockOffset(cur_filent_ind, block_offset_s);
-        block_to_read = *(block_offset_s + blk_num);
-        ret = call diskRead(disk_number, 1, block_to_read, block_read_storage);
-    
-        # get inode entry address
-        cur_filent_ind = *(block_read_storage + *(block_offset_s + blk_offset));
-        call transAddrToBlockOffset(cur_filent_ind, block_offset_s);
-        block_to_read = *(block_offset_s + blk_num);
-        ret = call diskRead(disk_number, 1, block_to_read, block_read_storage);
-    
-        cur_inode = *(block_read_storage + *(block_offset_s + blk_offset));
-        cur_inode = *(cur_filent_ind + first_inode);
-        
-        while (cur_inode < (cur_inode + 30)) do {
-            if (cur_inode = 
-            
+        if (*ind_ptr > 0) then {
+            if (*ind_ptr < off_inode_word) then {
+                ret = call getBlockByAddress(*ind_ptr, filent_block_storage, block_offset_s);
+                if (ret != 1) then {
+                    call free(filent_block_storage, 128, process_control_block);
+                    call free(inode_block_storage, 128, process_control_block);
+                    printstr "ERROR: unable to read file entry\n";
+                    return
+                };
+                printstr "\n\t"; printstr *(filent_block_storage + off_file_name);
+                printstr "\n"
+            }
         }
     };
     
     return
 }
 
-function get_elem_from_path(path, elem_num) {
+function getEntryLoc(path) {
+    local cur_inode, cur_filent_ind, block_offset_s:2, inode_read_storage,
+          filent_read_storage, cur_elem_str, cur_elem_index, cur_elem_len,
+          last_elem;
+    local ret, block_to_read, done, start_ind, end_ind, cur_data_ptr, cur_filename;
+
+    ret = call strlen(path);
+    if (ret = 1) then {
+        ret = call strcmp(path, "/", 1);
+        if (ret = 0) then return *(superblock_struct + off_root_dir_addr)
+    };
+
+    # max_filename_word is specified in words, not characters!
+    cur_elem_str = call malloc(max_filename_word, process_control_block);
+
+    # allocate memory for blocks being read
+    inode_read_storage = call malloc(128, process_control_block);
+    filent_read_storage = call malloc(128, process_control_block);
+
+    done = 0; cur_elem_index = 1;
+    cur_filent_ind = *(superblock_struct + off_root_dir_addr);
+    while (done = 0) do {
+        last_elem = call get_elem_from_path(path, cur_elem_str, cur_elem_index);
+        if (last_elem = neg 1) then break; # should this just be a return?
+        
+        # get directory/file entry address
+        ret = call getBlockByAddress(cur_filent_ind, filent_read_storage, block_offset_s);
+        if (ret != 1) then {
+            call free(inode_read_storage, 128, process_control_block);
+            call free(filent_read_storage, 128, process_control_block);
+            call free(cur_elem_str, max_filename_word, process_control_block);
+            return neg 1
+        };
+
+        # get inode entry address
+        cur_filent_ind = *(filent_read_storage + *(block_offset_s + blk_offset));
+        ret = call getBlockByAddress(cur_filent_ind, inode_read_storage, block_offset_s);
+        if (ret != 1) then {
+            call free(inode_read_storage, 128, process_control_block);
+            call free(filent_read_storage, 128, process_control_block);
+            call free(cur_elem_str, max_filename_word, process_control_block);
+            return neg 1
+        };
+
+        cur_inode = *(inode_read_storage + *(block_offset_s + blk_offset));
+        cur_data_ptr = *(cur_filent_ind + off_first_inode);
+
+        if (cur_inode != INODE_USED) then return neg 1;
+        while (cur_data_ptr < (cur_inode + 30)) do {
+            if (cur_data_ptr > 0) then {
+                ret = call getBlockByAddress(cur_data_ptr, filent_read_storage, block_offset_s);
+                if (ret != 1) then {
+                    call free(inode_read_storage, 128, process_control_block);
+                    call free(filent_read_storage, 128, process_control_block);
+                    call free(cur_elem_str, max_filename_word, process_control_block);
+                    return neg 1
+                };
+
+                cur_filename = *(filent_read_storage + off_file_name);
+
+                ret = call strcmp(cur_elem_str, cur_filename, max_filename_len);
+                if (ret = 0) then {
+                    if (last_elem = 0) then {
+                        if (*(filent_read_storage + off_is_directory) = 1) then
+                            cur_filent_ind = cur_data_ptr
+                    }
+                    else if (last_elem = 1) then { # we found it
+                        call free(inode_read_storage, 128, process_control_block);
+                        call free(filent_read_storage, 128, process_control_block);
+                        call free(cur_elem_str, max_filename_word, process_control_block);
+                        return cur_data_ptr
+                    }
+                }
+            }
+        }
+    };
+    call free(inode_read_storage, 128, process_control_block);
+    call free(filent_read_storage, 128, process_control_block);
+    call free(cur_elem_str, max_filename_word, process_control_block);
+    
+    return neg 1
+}
+
+function getBlockByAddress(address, store_addr, block_offset_s) {
+    local ret, block_to_read;
+
+    call transAddrToBlockOffset(address, block_offset_s);
+    block_to_read = *(block_offset_s + blk_num);
+    ret = call diskRead(disk_number, 1, block_to_read, store_addr);
+
+    return ret
+}
+
+function get_elem_from_path(path, store_path, elem_num) {
+    local start_ind, mid_ind, end_ind;
+    local cur_char, ret, break_count, forward_slash;
+
+    break_count = 0; start_ind = 0; ret = 0;
+    forward_slash = 47; #ascii value for '/'
+    end_ind = call strlen(path);
+
+    while (start_ind < end_ind) do {
+        if (char start_ind of path = forward_slash) then
+            break_count = (break_count + 1);
+        start_ind = (start_ind + 1);
+        if (elem_num = break_count) then break
+    };
+    if (start_ind >= end_ind) then return neg 1;
+
+    mid_ind = start_ind;
+    while (mid_ind < end_ind) do {
+        if (char mid_ind of path = forward_slash) then break;
+        mid_ind = (mid_ind + 1)
+    };
+    if (mid_ind = end_ind) then ret = 1;
+    mid_ind = (mid_ind - 1);
+
+    call strcpy(path, store_path, start_ind, mid_ind);
+
+    return ret
+}
+
+function fsys_createFile(fileName, destDirectoryName) {
     return
 }
 
-function fsys_createFile(driveNum, fileName, destDirectoryName) {
+function fsys_createDirectory(directoryName, destDirectoryName) {
     return
 }
 
-function fsys_createDirectory(driveNum, directoryName, destDirectoryName) {
+function fsys_removeDirectory(directoryPath) {
     return
 }
 
-function fsys_removeDirectory(driveNum, directoryPath) {
+function fsys_removeFile(filePath) {
     return
 }
 
-function fsys_removeFile(driveNum, filePath) {
+function fsys_fileAppend(filePath) {
     return
 }
 
-function fsys_fileAppend(driveNum, filePath) {
+function fsys_fileOpen(filePath) {
     return
 }
 
-function fsys_fileOpen(driveNum, filePath) {
-    return
-}
-
-function fsys_fileClose(driveNum, fileDescriptor) {
+function fsys_fileClose(fileDescriptor) {
     return
 }
 
@@ -200,7 +331,7 @@ function transAddrToBlockOffset(addrToTrans, storeLoc) {
     local offset, block_num;
     *storeLoc = (addrToTrans / 128);
     *(storeLoc + 1) = (addrToTrans % 128);
-    
+
     return
 }
 

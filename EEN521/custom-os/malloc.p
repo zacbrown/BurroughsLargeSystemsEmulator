@@ -3,7 +3,7 @@
 # Filename: malloc.p
 
 const   HEAP_BASE_ADDR  = 257,
-        HEAP_MEM_MAX    = 256, 
+        HEAP_MEM_MAX    = 256,
         F_RM_MEM_FREE   = 32767,
         F_RM_MEM_USED   = -32767,
         F_PM_MEM_FREE   = 30591,
