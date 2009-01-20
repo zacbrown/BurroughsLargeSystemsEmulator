@@ -38,7 +38,9 @@ function process_init(baseaddress){
 #
 ##############################################################################
 function timer_interupt(){
-        
+    <| TIMHANDLER:;
+    <| 
+    
 
 }
 
@@ -55,11 +57,18 @@ main {
 
     
 // implement timer and timer interupt.
+    call timer_interupt();
+
+    <| LOAD R1, TIMHANDLER;
+    <| STORE R1, [IVEC+IV$TIMER];
+    <| LOAD IVEC;
+    <| SETSR R1,$INTVEC;
+    <| LOAD R1, 0;
+    <| SETFL R1, $IP;
     <| LOAD R1, [<process_array>];
     <| JUMP R1;
-    <| 
 
-
+    if(processcount>0){
     
 }
 
