@@ -40,7 +40,7 @@ function keyboard_interrupt( ) {
      local readin;
      readin = -1;
  
-#MUST Turn off interrupts here
+#handle BACKSPACES
      while (readin != 0) do 
      {
          call memSet(buff, 0, sizeof_read_buffer);
@@ -86,7 +86,7 @@ function keyboard_interrupt( ) {
 function getline(input_str, sizeof_str) {
     local i, found, cont;
     i = 0; found = 0;
-    
+    #symaphore*****
     #this loop keeps running until it finds \n in the buffer
     while (found = 0) do
     {
