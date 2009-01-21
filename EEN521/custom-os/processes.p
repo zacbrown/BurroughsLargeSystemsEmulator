@@ -39,9 +39,9 @@ function process_init(baseaddress){
 ##############################################################################
 function timer_interupt(){
     <| TIMHANDLER:;
-    <| 
-    
-
+    <| LOAD R1, 25
+    <| SETSR R1, $TIMER
+    <| IRET
 }
 
 ##############################################################################
@@ -61,7 +61,7 @@ main {
 
     <| LOAD R1, TIMHANDLER;
     <| STORE R1, [IVEC+IV$TIMER];
-    <| LOAD IVEC;
+    <| LOAD R1, IVEC;
     <| SETSR R1,$INTVEC;
     <| LOAD R1, 0;
     <| SETFL R1, $IP;
