@@ -151,12 +151,12 @@ node * parse_statement( reader & input )
           input.error("missing a ( from the expression");
       while(true){
          input >> s;
-         if ( !isalpha(s[0]) && s != ")" && !isdigit(s[0]))
+         if ( !isalpha(s[0]) && s != ")" && !isdigit(s[0]) && s[0] != '*')
             input.error("not a name or a ')' statement");
          if (s == ")")
             break;
          else{
-             if (isdigit(s[0])) {
+             if (isdigit(s[0]) || s[0] == '*') {
                 input.putbacksymbol();
                 n->add(parse_expression(input));
              }
@@ -478,7 +478,7 @@ node * parse_expression( reader & input )
           input.error("missing a ( from the expression");
       while(true){
          input >> s;
-         if ( !isalpha(s[0]) && s != ")" && !isdigit(s[0]) && s[0] != '\"')
+         if ( !isalpha(s[0]) && s != ")" && !isdigit(s[0]) && s[0] != '\"' && s[0] != '*')
             input.error("not a name or a )");
          if (s == ")")
             break;

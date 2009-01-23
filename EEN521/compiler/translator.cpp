@@ -85,6 +85,7 @@ struct symboltable
    symbolinfo * lookup( string s );
    symbol * find_symbol ( string s );
    void print(void);
+   void stats(void);
    void remove_declaration( string s );
    symbolinfo * declare( string s, char k, int o ); };
 
@@ -100,6 +101,16 @@ int symboltable::hash( string s )
       h = -h;
    return h % tablesize; }
 
+void symboltable::stats(void)
+{
+	int i = 0, count = 0;
+    for (i = 0; i < tablesize; i++) {
+        symbol * blah = table[i];
+        if (blah != NULL) count++;
+	}
+	cout << "table size occupied: " << count << endl;
+}
+
 void symboltable::print(void)
 {
     int i = 0;
@@ -114,6 +125,7 @@ void symboltable::print(void)
             }
         }
     }
+	cout << "================================================================\n";
 }
 
 symbolinfo * symboltable::lookup( string s )
@@ -246,6 +258,10 @@ void node::translatejumpiftrue(int where, int reg)
 void node::translateexpression(int reg, bool must_be_var)
  { if (tag == "const_or_var")
     { symbolinfo * s = ST.lookup( detail );
+	  if (s == NULL) {
+		 cout << "Error: undeclared variable '" << detail << "'\n";
+		 exit(1);
+	  }
       string sign = "";
       if (s->info>=0)
          sign = "+";

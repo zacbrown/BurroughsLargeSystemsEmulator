@@ -12,7 +12,10 @@
 #   root dir address    : 1
 #
 # file_ent_s            : 8
-#   file_name           : 6
+#   file_name           : 5
+#   flag                : 1
+#       FREE - 0
+#       USED - 1
 #   is directory        : 1
 #   first inode         : 1
 #
@@ -31,7 +34,7 @@ export function fsys_readSuperBlock, fsys_writeSuperBlock, fsys_listDirectory,
 
 # struct sizes
 const   sizeof_superblock_s = 8,
-        sizeof_file_entry_s = 8,
+        sizeof_filent_s     = 8,
         sizeof_inode_s      = 32;
 
 # superblock_s offsets
@@ -52,13 +55,18 @@ const   off_superblock_word = 0,
         
 # file_ent_s offsets
 const   off_file_name       = 0,
+        off_file_ent_flag   = 5,
         off_is_directory    = 6,
         off_first_inode     = 7;
 
+# file_ent_s flags
+const   FILE_ENT_FREE       = 0,
+        FILE_ENT_USED       = 1;
+
 # inode_s offsets
-const   off_type            = 0,
-        off_next_cluster    = 1,
-        off_data            = 2;
+const   off_inode_type      = 0,
+        off_inode_next_clust= 1,
+        off_inode_data      = 2;
 
 # inode types
 const   INODE_EOF           = -1,
@@ -156,9 +164,11 @@ function fsys_listDirectory(directoryPath) {
     };
     
     printstr "\n"; printstr directoryPath;
-    ind_ptr = (inode_block_storage + off_data);
+    ind_ptr = (inode_block_storage + off_inode_data);
     done = 0;
     while (done = 0) do {
+    # non-zero inodes are considered places to check
+    # removed files/directories have inode loc zeroed
         if (*ind_ptr > 0) then {
             if (*ind_ptr < off_inode_word) then {
                 ret = call getBlockByAddress(*ind_ptr, filent_block_storage, block_offset_s);
@@ -171,7 +181,8 @@ function fsys_listDirectory(directoryPath) {
                 printstr "\n\t"; printstr *(filent_block_storage + off_file_name);
                 printstr "\n"
             }
-        }
+        };
+        ind_ptr = (ind_ptr + 1) # move to next position
     };
     
     return
@@ -299,6 +310,89 @@ function get_elem_from_path(path, store_path, elem_num) {
     return ret
 }
 
+# return -1 if no free file entry is found
+function get_next_free_file_ent() {
+    local block_ind, filent_block_storage, ret, block_offset_s:2, filent_ind;
+    
+    # initialize storage area
+    filent_block_storage = call malloc(128, process_control_block);
+    
+    block_ind = off_filent; 
+    while (block_ind < off_inode) do {
+        ret = call getBlockByAddress(*block_ind, filent_block_storage, block_offset_s);
+        if (ret != 0) then {
+            call free(filent_block_storage, 128, process_control_block);
+            return
+        };
+        
+        # run through and figure out the first free file entry
+        filent_ind = 0;
+        while (filent_ind < 128) do {
+            if (*(filent_ind + off_file_ent_flag) = FILE_ENT_FREE) then {
+                ret = (((block_ind - 1) * 128) + filent_ind);
+                call free(filent_block_storage, 128, process_control_block);
+                return ret
+            };
+            
+            filent_ind = (filent_ind + sizeof_filent_s)
+        };
+        
+        block_ind = (block_ind + 1)
+    };
+    
+    call free(filent_block_storage, 128, process_control_block);
+    return neg 1
+}
+
+# returns -1 if no free inode exists
+function get_next_free_inode() {
+    local block_ind, inode_block_storage, ret, block_offset_s:2, inode_ind;
+    local disk_size;
+    
+    # initialize storage area
+    inode_block_storage = call malloc(128, process_control_block);
+    
+    block_ind = off_inode;
+    disk_size = call diskSize(1);
+    
+    while (block_ind < disk_size) do {
+        ret = call getBlockByAddress(*block_ind, inode_block_storage, block_offset_s);
+        if (ret != 0) then {
+            call free(inode_block_storage, 128, process_control_block);
+            return
+        };
+        
+        # run through and figure out the first free inode
+        inode_ind = 0;
+        while (inode_ind < 128) do {
+            if (*(inode_ind + off_inode_type) = INODE_FREE) then {
+                ret = (((block_ind - 1) * 128) + inode_ind);
+                call free(inode_block_storage, 128, process_control_block);
+                return ret
+            };
+            
+            inode_ind = (inode_ind + sizeof_inode_s)
+        };
+        
+        block_ind = (block_ind + 1)
+    };
+    
+    call free(inode_block_storage, 128, process_control_block);
+    return neg 1
+}
+
+##############################################################
+# fsys_createFile: list file in specified directory
+# * arg 1: name to assign new file
+# * arg 2: directory to create file in
+# * returns:
+#   * failure - error code if one occured
+#       * -2 : memory problem, reading or writing
+#       * -3 : invalid disk drive number
+#       * -4 : invalid block number
+#   * success - address of 
+# * notes: creates a file entry and allocates a single inode
+##############################################################
 function fsys_createFile(fileName, destDirectoryName) {
     return
 }
