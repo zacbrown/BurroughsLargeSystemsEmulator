@@ -19,6 +19,13 @@ function init_keyboard_buffer() {
     system_input_buffer_num = 0;
     call memSet(system_input_buffer, 0, sizeof_system_input_buffer);
 
+    <| LOAD R1, keyboard_interrupt;
+    <| STORE R1, [IVEC+IV$KEYBD];
+    <| LOAD R1, IVEC;
+    <| SETSR R1, $INTVEC;
+    <| LOAD R1, 0;
+    <| SETFL R1, $IP;
+    
     return 0
 }
 

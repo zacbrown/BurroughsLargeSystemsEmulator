@@ -3,7 +3,7 @@
 # Filename: string.p
 
 export function strcpy, strcut, strcat, strlen, strchr, strrchr;
-export function strlen_word, strcmp;
+export function strlen_word, strcmp, find_next_space;
 import function memset;
 
 ##############################################################
@@ -190,4 +190,38 @@ function strchr(stringin, search_char) {
     return ind
 }
 
+##############################################################
+# find_next_space: given a string and a starting point, start, it
+#    will find the next space in the array or /n and return its index
+#
+# * returns:
+#   * failure - -1
+#   * success - index of space or /n
+##############################################################
+function find_next_space(str, sizeof_str, start) {
+    local end_str, i;
+    end_str = -1;
+    i = start;
+    
+    while ( i < sizeof_str) do
+    {
+        
+        if ( (char i of str) = 32) then
+        {#32 is ascii for space
+            end_str = i;
+            break;
+        }else if ( (char i of str) = 13) then
+        {#13 is ascii for carriage return or /n 
+            end_str = i;
+            break;
+        }else if ( (char i of str) = 10) then
+        {#10 is ascii for line feed or /n
+            end_str = i;
+            break;
+        }
+        i = ( i + 1)
+    };
+    
+    return end_str
+}
 end
