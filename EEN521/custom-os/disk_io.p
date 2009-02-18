@@ -39,9 +39,9 @@ function diskRead(driveNum, numBlocksToRead, firstBlockNumber, addrStoreData) {
 ##############################################################
 # diskWrite: write specified mem address to disk
 # * arg 1: disk drive number
-# * arg 2: number of consecutive blocks to read
+# * arg 2: number of consecutive blocks to write
 # * arg 3: number of the first block to write to
-# * arg 4: address of the memory location to store read data
+# * arg 4: address of the memory location to write data from
 # * returns: 
 #   * failure - error code if one occured
 #       * -2 : memory problem, reading or writing

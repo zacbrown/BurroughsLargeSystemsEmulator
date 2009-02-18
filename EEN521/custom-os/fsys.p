@@ -47,12 +47,12 @@ const   off_disk_id         = 0,
 # representative of the *first* block to use
 const   off_superblock      = 0,
         off_filent          = 1,
-        off_inode           = 101; 
-        
+        off_inode           = 101;
+
 const   off_superblock_word = 0,
         off_filent_word     = 128,
         off_inode_word      = 12928;
-        
+
 # file_ent_s offsets
 const   off_file_name       = 0,
         off_file_ent_flag   = 5,
@@ -145,16 +145,16 @@ function fsys_listDirectory(directoryPath) {
     local dir_entry_loc, done, ind_ptr, inode_block_storage, ret;
     local filent_block_storage, block_offset_s:2;
     dir_entry_loc = call getEntryLoc(directoryPath);
-    
-    if (dir_entry_loc = neg 1) then { 
+
+    if (dir_entry_loc = neg 1) then {
         printstr "ERROR: no such directory\n";
         return
     };
-    
+
     # initialize storage area
     inode_block_storage = call malloc(128, process_control_block);
     filent_block_storage = call malloc(128, process_control_block);
-    
+
     ret = call getBlockByAddress(dir_entry_loc, inode_block_storage);
     if (ret != 1) then {
         printstr "ERROR: unable to read block, possible memory error";
@@ -162,7 +162,7 @@ function fsys_listDirectory(directoryPath) {
         call free(inode_block_storage, 128, process_control_block);
         return
     };
-    
+
     printstr "\n"; printstr directoryPath;
     ind_ptr = (inode_block_storage + off_inode_data);
     done = 0;
@@ -184,7 +184,7 @@ function fsys_listDirectory(directoryPath) {
         };
         ind_ptr = (ind_ptr + 1) # move to next position
     };
-    
+
     return
 }
 
@@ -212,7 +212,7 @@ function getEntryLoc(path) {
     while (done = 0) do {
         last_elem = call get_elem_from_path(path, cur_elem_str, cur_elem_index);
         if (last_elem = neg 1) then break; # should this just be a return?
-        
+
         # get directory/file entry address
         ret = call getBlockByAddress(cur_filent_ind, filent_read_storage, block_offset_s);
         if (ret != 1) then {
@@ -267,7 +267,7 @@ function getEntryLoc(path) {
     call free(inode_read_storage, 128, process_control_block);
     call free(filent_read_storage, 128, process_control_block);
     call free(cur_elem_str, max_filename_word, process_control_block);
-    
+
     return neg 1
 }
 
@@ -313,18 +313,18 @@ function get_elem_from_path(path, store_path, elem_num) {
 # return -1 if no free file entry is found
 function get_next_free_file_ent() {
     local block_ind, filent_block_storage, ret, block_offset_s:2, filent_ind;
-    
+
     # initialize storage area
     filent_block_storage = call malloc(128, process_control_block);
-    
-    block_ind = off_filent; 
+
+    block_ind = off_filent;
     while (block_ind < off_inode) do {
         ret = call getBlockByAddress(*block_ind, filent_block_storage, block_offset_s);
         if (ret != 0) then {
             call free(filent_block_storage, 128, process_control_block);
             return
         };
-        
+
         # run through and figure out the first free file entry
         filent_ind = 0;
         while (filent_ind < 128) do {
@@ -333,13 +333,13 @@ function get_next_free_file_ent() {
                 call free(filent_block_storage, 128, process_control_block);
                 return ret
             };
-            
+
             filent_ind = (filent_ind + sizeof_filent_s)
         };
-        
+
         block_ind = (block_ind + 1)
     };
-    
+
     call free(filent_block_storage, 128, process_control_block);
     return neg 1
 }
@@ -348,20 +348,20 @@ function get_next_free_file_ent() {
 function get_next_free_inode() {
     local block_ind, inode_block_storage, ret, block_offset_s:2, inode_ind;
     local disk_size;
-    
+
     # initialize storage area
     inode_block_storage = call malloc(128, process_control_block);
-    
+
     block_ind = off_inode;
     disk_size = call diskSize(1);
-    
+
     while (block_ind < disk_size) do {
         ret = call getBlockByAddress(*block_ind, inode_block_storage, block_offset_s);
         if (ret != 0) then {
             call free(inode_block_storage, 128, process_control_block);
             return
         };
-        
+
         # run through and figure out the first free inode
         inode_ind = 0;
         while (inode_ind < 128) do {
@@ -370,19 +370,19 @@ function get_next_free_inode() {
                 call free(inode_block_storage, 128, process_control_block);
                 return ret
             };
-            
+
             inode_ind = (inode_ind + sizeof_inode_s)
         };
-        
+
         block_ind = (block_ind + 1)
     };
-    
+
     call free(inode_block_storage, 128, process_control_block);
     return neg 1
 }
 
 ##############################################################
-# fsys_createFile: list file in specified directory
+# fsys_createFile: create file in specified directory
 # * arg 1: name to assign new file
 # * arg 2: directory to create file in
 # * returns:
@@ -390,15 +390,122 @@ function get_next_free_inode() {
 #       * -2 : memory problem, reading or writing
 #       * -3 : invalid disk drive number
 #       * -4 : invalid block number
-#   * success - address of 
+#   * success - address of
 # * notes: creates a file entry and allocates a single inode
 ##############################################################
 function fsys_createFile(fileName, destDirectoryName) {
+    
     return
 }
 
 function fsys_createDirectory(directoryName, destDirectoryName) {
     return
+}
+
+function createInode(name, destDirectoryName, isDir) {
+    local block_storage, block_offset_s:2, ret, dir_entry_loc;
+    local search_free_pos, done, tmp_block_storage, tmp_block_offset_s:2;
+    local new_ent_addr, new_inode_addr, tmp_ptr, len;
+
+    dir_entry_loc = call getEntryLoc(destDirectoryName);
+    if (dir_entry_loc = neg 1) then return neg 1;
+    
+    # gimme some memory
+    block_storage = call malloc(128, process_control_block);
+    tmp_block_storage = call malloc(128, process_control_block);
+    
+    ret = call getBlockByAddress(dir_entry_loc, block_storage, block_offset_s);
+    if (ret != 1) then {
+        printstr "ERROR: unable to read block, possible memory error";
+        call free(block_storage, 128, process_control_block);
+        call free(tmp_block_storage, 128, process_control_block);
+        return neg 1
+    };
+    
+    new_ent_addr = call get_next_free_file_ent();
+    if (new_ent_addr = neg 1) then {
+        printstr "ERROR: no free file entry exists.";
+        call free(block_storage, 128, process_control_block);
+        call free(tmp_block_storage, 128, process_control_block);
+        return neg 1
+    };
+    
+    new_inode_addr = call get_next_free_inode();
+    if (new_inode_addr = neg 1) then {
+        printstr "ERROR: no free free inode exists.";
+        call free(block_storage, 128, process_control_block);
+        call free(tmp_block_storage, 128, process_control_block);
+        return neg 1
+    };
+    
+    search_free_pos = (block_storage + *(block_offset_s + 1));
+    search_free_pos = (search_free_pos + off_first_inode);
+    done = 0;
+    while (done = 0) do {
+        if (search_free_pos = 0) then {
+            *search_free_pos = new_ent_addr;
+            ret = call getBlockByAddress(new_ent_addr, tmp_block_storage,
+                tmp_block_offset_s);
+            
+            if (ret = neg 1) then {
+                printstr "ERROR: unable to load file entry location.";
+                call free(block_storage, 128, process_control_block);
+                call free(tmp_block_storage, 128, process_control_block);
+                return neg 1
+            };
+            
+            # add info about the new file entry
+            tmp_ptr = *(tmp_block_storage + *(tmp_block_offset_s + 1));
+            len = call strlen(name);
+            len = (len - 1);
+            call strcpy(name, tmp_ptr, 0, len);
+            *(tmp_ptr + off_file_ent_flag) = FILE_ENT_USED;
+            if (isDir != 0) then 
+                *(tmp_ptr + off_is_directory) = 1
+            else
+                *(tmp_ptr + off_is_directory) = 0;
+            
+            *(tmp_ptr + off_first_inode) = new_inode_addr;
+            
+            ret = call diskWrite(1, 1, *tmp_block_offset_s, tmp_block_storage);
+            if (ret < 0) then {
+               printstr "ERROR: could not write new file entry to disk.";
+               call free(block_storage, 128, process_control_block);
+               call free(tmp_block_storage, 128, process_control_block);
+               return neg 1
+            };
+            
+            # update the inode entry
+            ret = call getBlockByAddress(new_inode_addr, tmp_block_storage,
+                tmp_block_offset_s);
+                
+            if (ret = neg 1) then {
+                printstr "ERROR: could not write new file entry to disk.";
+                call free(block_storage, 128, process_control_block);
+                call free(tmp_block_storage, 128, process_control_block);
+                return neg 1            
+            };
+            
+            # add info about the new inode
+            tmp_ptr = *(tmp_block_storage + *(tmp_block_offset_s + 1));
+            *tmp_ptr = INODE_EOF; #set the type
+            
+            ret = call diskWrite(1, 1, *tmp_block_offset_s, tmp_block_storage);
+            if (ret < 0) then {
+                printstr "ERROR: could not write new inode entry to disk.";
+               call free(block_storage, 128, process_control_block);
+               call free(tmp_block_storage, 128, process_control_block);
+               return neg 1
+            };
+            
+            # update dir entry, is this entirely right?
+            ret = call diskWrite(1, 1, *block_offset_s, block_storage);
+            call free(block_storage, 128, process_control_block);
+            call free(tmp_block_storage, 128, process_control_block);
+            
+            if (ret = neg 1) then return neg 1 else return 0
+        }
+    }
 }
 
 function fsys_removeDirectory(directoryPath) {
