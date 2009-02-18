@@ -252,8 +252,8 @@ node * parse_block( reader & input )
    return result; }
 
 node * parse_top_level( reader & input )
-{  string s;
-   input >> s;
+{  string s; 
+    input >> s; 
 
    if (s == "function")
     { node *n = N("functiondef");
@@ -337,7 +337,7 @@ node * parse_top_level( reader & input )
    }
 
     if (s == "export") {
-       input >> s;
+        input >> s;
        if (s != "function" && s != "global")
             input.error("Error, invalid export: \"" + s + "\"\n");
 
