@@ -1,0 +1,5 @@
+makecodes 
+CC -c useful.cpp
+CC -c local-execute.cpp
+CC assemble.cpp useful.o -o assemble
+CC computer.cpp useful.o local-execute.o -o computer
