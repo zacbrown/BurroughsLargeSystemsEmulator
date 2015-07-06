@@ -1,0 +1,62 @@
+Language Description
+
+Types
+
+type -> ( PTR ) * ( FLOAT | INT | CHAR )
+
+Expressions
+
+number -> ( 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 ) ( 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 )*
+
+identifier -> letter ( | letter | number ) *
+
+functexpr -> identifier ( { expr } ( , expr )* )
+
+createexpr -> CREATE type { number }
+
+operand -> number | ( expr ) | identifier | functexpr | createexpr
+
+folexpr ->  (folexpr ~ ) | operand
+
+powexpr -> { powexpr ^ } folexpr
+
+notexpr -> { notexpr !  } powexpr
+
+mdexpr -> { mdexpr ( * | / | % ) } notexpr
+
+asexpr -> { asexpr ( + | - ) } mdexpr
+
+shexpr -> { shexpr ( >> | << ) } asexpr
+
+cmpexpr -> { cmpexpr ( = | < | > | <= | >= | != ) }  shexpr
+
+andexpr -> { andexpr AND } cmpexpr
+
+orexpr -> { orexpr OR } andexpr
+
+expr -> orexpr
+
+
+Statements
+
+stmtlist -> stmt ( | ; stmtlist )
+
+stmt -> ( pstmt | deststmt | condstmt | wstmt | asstmt | dstmt | swstmt ) { | stmtlist }
+
+deststmt -> DESTROY identifier
+
+readstmt -> READ identifier
+
+pstmt -> PRINT expr
+
+condstmt -> IF expr THEN stmt { (ELSIF expr stmt)* } ELSE stmt END | WHEN expr THEN stmt END | UNLESS expr THEN stmt END
+
+wstmt -> WHILE expr DO stmt END
+
+dstmt -> VAR identifier ( , identifier )* : { global } { const } type
+
+functdec -> FUNCTION identifier : params { GIVES type } { IS stmt END }
+
+params -> type identifier ( , type identifier )*
+
+asstmt -> identifier { ! expr } | { ~ } = expr

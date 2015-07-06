@@ -1,0 +1,75 @@
+Script started on Thu 20 Sep 2007 12:27:26 PM EDT
+]0;cmartin@otherchrismartin:~/college/een521[cmartin@otherchrismartin een521]$ g++ assem.cpp -o ASSEM
+]0;cmartin@otherchrismartin:~/college/een521[cmartin@otherchrismartin een521]$ g++ exec.cpp -o EXEC
+]0;cmartin@otherchrismartin:~/college/een521[cmartin@otherchrismartin een521]$ ./ASSEM test.asm test[K[K[K[Kbinaro[Ky.out
+Wrote 12 commands to binary.out successfully!
+]0;cmartin@otherchrismartin:~/college/een521[cmartin@otherchrismartin een521]$ ls
+[00m[00;32ma.out[00m  [00;32mASSEM[00m  [00massem.cpp[00m  [00mbinary.out[00m  [00;32mEXEC[00m  [00mexec.cpp[00m  [00mfunctions.h[00m  [00mtest.asm[00m  [00mtest.out[00m  [00mtypescript[00m
+[m]0;cmartin@otherchrismartin:~/college/een521[cmartin@otherchrismartin een521]$ ./EXEC binarou[K[Ky.out
+EXECUTOR: binary.out loaded into memory (12 instructions).
+479001600
+EXECUTOR: Execution complete!
+]0;cmartin@otherchrismartin:~/college/een521[cmartin@otherchrismartin een521]$ #479001600 is the factorial of 12 :)
+]0;cmartin@otherchrismartin:~/college/een521[cmartin@otherchrismartin een521]$ #Now for some debugging funcations[K[K[K[K[K[K[Kctions
+]0;cmartin@otherchrismartin:~/college/een521[cmartin@otherchrismartin een521]$ ./EXEC [K
+[EXECUTOR]$ help
+------------
+Command Help
+------------
+HELP - Displays this message.
+RUN [binary file] - Loads and runs the binary file without any debugging.
+DEBUG [binary file] - Loads the binary and allows debugging commands.
+STEP [number] - Execute the next [number] of binary commands.
+SHOW REG [number] - Shows the register contents.
+SHOW MEM [low] [high] - Shows memory contents in the range low to high (Base 16).
+SHOW LASTMEM - Shows what the last change to memory was.
+SHOW PC - Shows the program counter value, the previous and next commands.
+EXIT - Exits EXECUTOR
+
+[EXECUTOR]$ DEBUG binary.out
+EXECUTOR: binary.out loaded into memory (12 instructions).
+[EXECUTOR]$ show mem 0 13
+0x0 = 0x0
+0x1 = 0x410000c
+0x2 = 0x4200001
+0x3 = 0x4300001
+0x4 = 0x18210000
+0x5 = 0x1a000009
+0x6 = 0x10320000
+0x7 = 0xc200001
+0x8 = 0x24000004
+0x9 = 0xa300535
+0xa = 0x28000535
+0xb = 0x2a000000
+0xc = 0x2000000
+0xd = 0x0
+[EXECUTOR]$ step 20
+[EXECUTOR]$ show pc
+PC = 6
+[EXECUTOR]$ show lastmem
+Last memory access at 0x5
+Last memory write at 0xc
+Old value = 0x0
+New value = 0x2000000
+[EXECUTOR]$ show reg 3
+REG 3 = 0x6
+[EXECUTOR]$ step 30
+[EXECUTOR]$ show reg 3
+REG 3 = 0x58980
+[EXECUTOR]$ show reg 1
+REG 1 = 0xc
+[EXECUTOR]$ step 30
+479001600
+[EXECUTOR]$ show reg 3
+REG 3 = 0x1c8cfc00
+[EXECUTOR]$ show lastmem
+Last memory access at 0xb
+Last memory write at 0x535
+Old value = 0x0
+New value = 0x1c8cfc00
+[EXECUTOR]$ show pc
+PC = 12
+[EXECUTOR]$ exit
+]0;cmartin@otherchrismartin:~/college/een521[cmartin@otherchrismartin een521]$ exit
+
+Script done on Thu 20 Sep 2007 12:31:41 PM EDT

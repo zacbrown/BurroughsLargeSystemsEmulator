@@ -1,0 +1,102 @@
+    var enter : global char;
+    enter = 10;
+
+    var savedRand : global int;
+    savedRand = 1239;
+
+    function getNextRand : gives int is
+    {
+        savedRand = savedRand * savedRand * 4126 + savedRand * 2985 + 13123;
+        return savedRand % 1000
+    }
+    end;
+
+    function printArray : ptr int loc, int len gives int is
+    {
+        var i : int;
+        i = 0;
+        while i < len do
+        {
+            print loc!i; 
+            print enter;
+            i = i + 1  
+        }
+        end;
+        return 0
+    }
+    end;
+
+    function fillArray : ptr int loc, int len gives ptr int is
+    {
+        var i : int;
+        i = 0;
+        while i < len do
+        {
+            loc!i = getNextRand();
+            i = i + 1  
+        }
+        end;
+        return loc
+    }
+    end;
+
+    function findSmallestPos : ptr int loc, int len, int start gives int is
+    {
+        var pos, val : int;
+        pos = start;
+        val = loc!start;
+        start = start + 1;
+        while start < len do
+        {
+            if(loc!start > val) then
+            {
+                val = loc!start;
+                pos = start
+            }
+            end;
+            start = start + 1
+        }
+        end;
+        return pos
+    }
+    end;
+
+    function swapPos : ptr int loc, int one, int two gives int is
+    {
+        var temp : int;
+        temp = loc!one;
+        loc!one = loc!two;
+        loc!two = temp;
+        return 0;
+    }
+    end;
+
+    function sortArray : ptr int loc, int len gives int is
+    {
+        var i, temp : int;
+        i = 0;
+        
+        while i < len do
+        {
+            temp = findSmallestPos(loc, len, i);
+            temp = swapPos(loc, i, temp);
+            i = i + 1
+        }
+        end;
+        return 0
+    }
+    end;
+
+    var temp : int;
+    var ave : float;
+
+    var a : ptr int;
+    a = fillArray(create int 22, 22);
+    temp = printArray(a, 22);
+    print enter;
+
+    temp = sortArray(a, 22);
+    temp = printArray(a, 22);
+
+    destroy a
+            

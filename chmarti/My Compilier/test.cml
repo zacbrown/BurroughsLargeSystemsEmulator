@@ -1,0 +1,59 @@
+    
+    var HP : global ptr int;  
+
+    function createit : int num gives ptr int is
+    {
+        var cur : ptr int;
+        var before : ptr int;
+        before = 0;
+        cur = HP;
+        if num % 2 != 0 then
+            num = num + 1
+        end;       
+
+        while (cur != 0) do
+        {
+            when num <= (cur - 1)~ then
+            {
+                var prev : int;
+                var next : int;
+                prev = cur - 1;
+                next = cur + num;
+                next~ = prev~ - num;
+                next = next + 1;  
+                next~ = cur~;
+                prev~ = num;
+
+                if before != 0 then 
+                    before~ = next
+                else
+                    HP = next
+                end;
+                return cur
+            }
+            end;
+            before = cur;
+            cur = cur~
+        }
+        end
+        return 0
+    }
+    end;
+
+    function destroyit : int loc gives ptr int is
+    {
+        loc~ = HP;
+        HP = loc;
+        return 1
+    }
+    end;    
+
+    var enter : char;
+    enter = 10;
+
+    print HP; print enter;
+
+    var a : ptr int;
+    a = createit 10);
+    a = destroyit(a);
+

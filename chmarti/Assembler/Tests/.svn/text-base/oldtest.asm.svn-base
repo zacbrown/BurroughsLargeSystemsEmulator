@@ -1,0 +1,3 @@
+LOAD    R1, 12
+LOAD    R2, 1
+HALT

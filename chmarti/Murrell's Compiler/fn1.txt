@@ -1,0 +1,23 @@
+
+main
+{ fff(1, 2*3+4);
+  ggggg("hello");
+  fff(x, y*10+z);
+  outch '\n'; }
+
+global x=9, y=8;
+
+function ggggg(s)
+{ outch '[';
+  outs s;
+  outch ']'; }
+
+global z=7;
+
+function fff(a, b)
+{ outs "(a=";
+  outn a;
+  outs ", b=";
+  outn b;
+  outs ")"; }
+

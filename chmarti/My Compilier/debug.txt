@@ -1,0 +1,1549 @@
+In parseStatementList
+   In parseStatement
+      Getting Lexeme(4, PRINT, 0)
+      In parsePrintStmt
+         In parseOR
+            In parseAND
+               In parseCMP
+                  In parseSH
+                     In parseAS
+                        In parseMD
+                           In parsePow
+                              In parseOperand
+                                 Getting Lexeme(2, 5, 5)
+                              Returning NUM from parseOperand
+                              Getting Lexeme(3, +, 1)
+                              Ungetting Last Lexeme
+                           Returning from parsePow
+                           Getting Lexeme(3, +, 1)
+                           Ungetting Last Lexeme
+                        Returning from parseMD
+                        Getting Lexeme(3, +, 1)
+                        In parseMD
+                           In parsePow
+                              In parseOperand
+                                 Getting Lexeme(2, 4, 4)
+                              Returning NUM from parseOperand
+                              Getting Lexeme(3, *, 4)
+                              Ungetting Last Lexeme
+                           Returning from parsePow
+                           Getting Lexeme(3, *, 4)
+                           In parsePow
+                              In parseOperand
+                                 Getting Lexeme(2, 11, 11)
+                              Returning NUM from parseOperand
+                              Getting Lexeme(3, +, 1)
+                              Ungetting Last Lexeme
+                           Returning from parsePow
+                           Getting Lexeme(3, +, 1)
+                           Ungetting Last Lexeme
+                        Returning from parseMD
+                        Getting Lexeme(3, +, 1)
+                        In parseMD
+                           In parsePow
+                              In parseOperand
+                                 Getting Lexeme(2, 3, 3)
+                              Returning NUM from parseOperand
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parsePow
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseMD
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseAS
+                     Getting Lexeme(6, ;, -1)
+                     Ungetting Last Lexeme
+                  Returning from parseSH
+                  Getting Lexeme(6, ;, -1)
+                  Ungetting Last Lexeme
+               Returning from parseCMP
+               Getting Lexeme(6, ;, -1)
+               Ungetting Last Lexeme
+            Returning from parseAND
+            Getting Lexeme(6, ;, -1)
+            Ungetting Last Lexeme
+         Returning from parseOR
+      Returning from parsePrintStmt
+   Returning from parseStatement
+   Getting Lexeme(6, ;, -1)
+   In parseStatement
+      Getting Lexeme(4, FUNCTION, 17)
+      In parseFunctionDeclaration
+         Getting Lexeme(5, myFun, -1)
+         Getting Lexeme(12, :, -1)
+         In parseParams
+            Getting Lexeme(4, int, 14)
+            Getting Lexeme(5, hi, -1)
+            Getting Lexeme(4, RETURNS, 20)
+            Ungetting Last Lexeme
+         Returning from parseParams
+         Getting Lexeme(4, RETURNS, 20)
+         Getting Lexeme(4, int, 14)
+         Getting Lexeme(4, IS, 19)
+         In parseStatement
+            Getting Lexeme(0, {, -1)
+            In parseStatementList
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 10, 10)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 20, 20)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 30, 30)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(1, }, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(1, }, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(1, }, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(1, }, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(1, }, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(1, }, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(1, }, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(1, }, -1)
+               Ungetting Last Lexeme
+            Returning from parseStatementList
+            Getting Lexeme(1, }, -1)
+         Returning from parseStatement
+         Getting Lexeme(4, END, 1)
+      Returning from parseFunctionDeclaration
+   Returning from parseStatement
+   Getting Lexeme(6, ;, -1)
+   In parseStatement
+      Getting Lexeme(4, VAR, 10)
+      In parseVarStmt
+         Getting Lexeme(5, val, -1)
+         Getting Lexeme(12, :, -1)
+         Getting Lexeme(4, int, 14)
+      Returning from parseVarStmt
+   Returning from parseStatement
+   Getting Lexeme(6, ;, -1)
+   In parseStatement
+      Getting Lexeme(4, WHILE, 3)
+      In parseWhileStmt
+         In parseOR
+            In parseAND
+               In parseCMP
+                  In parseSH
+                     In parseAS
+                        In parseMD
+                           In parsePow
+                              In parseOperand
+                                 Getting Lexeme(9, (, -1)
+                                 In parseOR
+                                    In parseAND
+                                       In parseCMP
+                                          In parseSH
+                                             In parseAS
+                                                In parseMD
+                                                   In parsePow
+                                                      In parseOperand
+                                                         Getting Lexeme(5, val, -1)
+                                                         Getting Lexeme(3, -, 2)
+                                                         Ungetting Last Lexeme
+                                                      Returning VAR from parseOperand
+                                                      Getting Lexeme(3, -, 2)
+                                                      Ungetting Last Lexeme
+                                                   Returning from parsePow
+                                                   Getting Lexeme(3, -, 2)
+                                                   Ungetting Last Lexeme
+                                                Returning from parseMD
+                                                Getting Lexeme(3, -, 2)
+                                                In parseMD
+                                                   In parsePow
+                                                      In parseOperand
+                                                         Getting Lexeme(2, 1, 1)
+                                                      Returning NUM from parseOperand
+                                                      Getting Lexeme(3, *, 4)
+                                                      Ungetting Last Lexeme
+                                                   Returning from parsePow
+                                                   Getting Lexeme(3, *, 4)
+                                                   In parsePow
+                                                      In parseOperand
+                                                         Getting Lexeme(2, 5, 5)
+                                                      Returning NUM from parseOperand
+                                                      Getting Lexeme(3, +, 1)
+                                                      Ungetting Last Lexeme
+                                                   Returning from parsePow
+                                                   Getting Lexeme(3, +, 1)
+                                                   Ungetting Last Lexeme
+                                                Returning from parseMD
+                                                Getting Lexeme(3, +, 1)
+                                                In parseMD
+                                                   In parsePow
+                                                      In parseOperand
+                                                         Getting Lexeme(5, myFun, -1)
+                                                         Getting Lexeme(9, (, -1)
+                                                         In parseFunctionCall
+                                                            In parseOR
+                                                               In parseAND
+                                                                  In parseCMP
+                                                                     In parseSH
+                                                                        In parseAS
+                                                                           In parseMD
+                                                                              In parsePow
+                                                                                 In parseOperand
+                                                                                    Getting Lexeme(5, val, -1)
+                                                                                    Getting Lexeme(3, *, 4)
+                                                                                    Ungetting Last Lexeme
+                                                                                 Returning VAR from parseOperand
+                                                                                 Getting Lexeme(3, *, 4)
+                                                                                 Ungetting Last Lexeme
+                                                                              Returning from parsePow
+                                                                              Getting Lexeme(3, *, 4)
+                                                                              In parsePow
+                                                                                 In parseOperand
+                                                                                    Getting Lexeme(2, 99, 99)
+                                                                                 Returning NUM from parseOperand
+                                                                                 Getting Lexeme(10, ), -1)
+                                                                                 Ungetting Last Lexeme
+                                                                              Returning from parsePow
+                                                                              Getting Lexeme(10, ), -1)
+                                                                              Ungetting Last Lexeme
+                                                                           Returning from parseMD
+                                                                           Getting Lexeme(10, ), -1)
+                                                                           Ungetting Last Lexeme
+                                                                        Returning from parseAS
+                                                                        Getting Lexeme(10, ), -1)
+                                                                        Ungetting Last Lexeme
+                                                                     Returning from parseSH
+                                                                     Getting Lexeme(10, ), -1)
+                                                                     Ungetting Last Lexeme
+                                                                  Returning from parseCMP
+                                                                  Getting Lexeme(10, ), -1)
+                                                                  Ungetting Last Lexeme
+                                                               Returning from parseAND
+                                                               Getting Lexeme(10, ), -1)
+                                                               Ungetting Last Lexeme
+                                                            Returning from parseOR
+                                                            Getting Lexeme(10, ), -1)
+                                                            Ungetting Last Lexeme
+                                                            Getting Lexeme(10, ), -1)
+                                                         Returning EXPR from parseFunctionCall
+                                                      Returning FUN from parseOperand
+                                                      Getting Lexeme(10, ), -1)
+                                                      Ungetting Last Lexeme
+                                                   Returning from parsePow
+                                                   Getting Lexeme(10, ), -1)
+                                                   Ungetting Last Lexeme
+                                                Returning from parseMD
+                                                Getting Lexeme(10, ), -1)
+                                                Ungetting Last Lexeme
+                                             Returning from parseAS
+                                             Getting Lexeme(10, ), -1)
+                                             Ungetting Last Lexeme
+                                          Returning from parseSH
+                                          Getting Lexeme(10, ), -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parseCMP
+                                       Getting Lexeme(10, ), -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseAND
+                                    Getting Lexeme(10, ), -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseOR
+                                 Getting Lexeme(10, ), -1)
+                              Returning EXPR from parseOperand
+                              Getting Lexeme(4, DO, 9)
+                              Ungetting Last Lexeme
+                           Returning from parsePow
+                           Getting Lexeme(4, DO, 9)
+                           Ungetting Last Lexeme
+                        Returning from parseMD
+                        Getting Lexeme(4, DO, 9)
+                        Ungetting Last Lexeme
+                     Returning from parseAS
+                     Getting Lexeme(4, DO, 9)
+                     Ungetting Last Lexeme
+                  Returning from parseSH
+                  Getting Lexeme(4, DO, 9)
+                  Ungetting Last Lexeme
+               Returning from parseCMP
+               Getting Lexeme(4, DO, 9)
+               Ungetting Last Lexeme
+            Returning from parseAND
+            Getting Lexeme(4, DO, 9)
+            Ungetting Last Lexeme
+         Returning from parseOR
+         Getting Lexeme(4, DO, 9)
+         In parseStatement
+            Getting Lexeme(0, {, -1)
+            In parseStatementList
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 10, 10)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 20, 20)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 30, 30)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(5, val, -1)
+                                             Getting Lexeme(6, ;, -1)
+                                             Ungetting Last Lexeme
+                                          Returning VAR from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 50, 50)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(1, }, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(1, }, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(1, }, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(1, }, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(1, }, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(1, }, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(1, }, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(1, }, -1)
+               Ungetting Last Lexeme
+            Returning from parseStatementList
+            Getting Lexeme(1, }, -1)
+         Returning from parseStatement
+         Getting Lexeme(4, END, 1)
+      Returning from parseWhileStatement
+   Returning from parseStatement
+   Getting Lexeme(6, ;, -1)
+   In parseStatement
+      Getting Lexeme(4, WHEN, 6)
+      In parseWhenStmt
+         In parseOR
+            In parseAND
+               In parseCMP
+                  In parseSH
+                     In parseAS
+                        In parseMD
+                           In parsePow
+                              In parseOperand
+                                 Getting Lexeme(5, val, -1)
+                                 Getting Lexeme(3, +, 1)
+                                 Ungetting Last Lexeme
+                              Returning VAR from parseOperand
+                              Getting Lexeme(3, +, 1)
+                              Ungetting Last Lexeme
+                           Returning from parsePow
+                           Getting Lexeme(3, +, 1)
+                           Ungetting Last Lexeme
+                        Returning from parseMD
+                        Getting Lexeme(3, +, 1)
+                        In parseMD
+                           In parsePow
+                              In parseOperand
+                                 Getting Lexeme(2, 2, 2)
+                              Returning NUM from parseOperand
+                              Getting Lexeme(4, THEN, 5)
+                              Ungetting Last Lexeme
+                           Returning from parsePow
+                           Getting Lexeme(4, THEN, 5)
+                           Ungetting Last Lexeme
+                        Returning from parseMD
+                        Getting Lexeme(4, THEN, 5)
+                        Ungetting Last Lexeme
+                     Returning from parseAS
+                     Getting Lexeme(4, THEN, 5)
+                     Ungetting Last Lexeme
+                  Returning from parseSH
+                  Getting Lexeme(4, THEN, 5)
+                  Ungetting Last Lexeme
+               Returning from parseCMP
+               Getting Lexeme(4, THEN, 5)
+               Ungetting Last Lexeme
+            Returning from parseAND
+            Getting Lexeme(4, THEN, 5)
+            Ungetting Last Lexeme
+         Returning from parseOR
+         Getting Lexeme(4, THEN, 5)
+         In parseStatement
+            Getting Lexeme(0, {, -1)
+            In parseStatementList
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 50, 50)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(5, val, -1)
+                                             Getting Lexeme(6, ;, -1)
+                                             Ungetting Last Lexeme
+                                          Returning VAR from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 30, 30)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 20, 20)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             GettinIn parseStatementList
+   In parseStatement
+      Getting Lexeme(4, PRINT, 0)
+      In parsePrintStmt
+         In parseOR
+            In parseAND
+               In parseCMP
+                  In parseSH
+                     In parseAS
+                        In parseMD
+                           In parsePow
+                              In parseOperand
+                                 Getting Lexeme(2, 5, 5)
+                              Returning NUM from parseOperand
+                              Getting Lexeme(3, +, 1)
+                              Ungetting Last Lexeme
+                           Returning from parsePow
+                           Getting Lexeme(3, +, 1)
+                           Ungetting Last Lexeme
+                        Returning from parseMD
+                        Getting Lexeme(3, +, 1)
+                        In parseMD
+                           In parsePow
+                              In parseOperand
+                                 Getting Lexeme(2, 4, 4)
+                              Returning NUM from parseOperand
+                              Getting Lexeme(3, *, 4)
+                              Ungetting Last Lexeme
+                           Returning from parsePow
+                           Getting Lexeme(3, *, 4)
+                           In parsePow
+                              In parseOperand
+                                 Getting Lexeme(2, 11, 11)
+                              Returning NUM from parseOperand
+                              Getting Lexeme(3, +, 1)
+                              Ungetting Last Lexeme
+                           Returning from parsePow
+                           Getting Lexeme(3, +, 1)
+                           Ungetting Last Lexeme
+                        Returning from parseMD
+                        Getting Lexeme(3, +, 1)
+                        In parseMD
+                           In parsePow
+                              In parseOperand
+                                 Getting Lexeme(2, 3, 3)
+                              Returning NUM from parseOperand
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parsePow
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseMD
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseAS
+                     Getting Lexeme(6, ;, -1)
+                     Ungetting Last Lexeme
+                  Returning from parseSH
+                  Getting Lexeme(6, ;, -1)
+                  Ungetting Last Lexeme
+               Returning from parseCMP
+               Getting Lexeme(6, ;, -1)
+               Ungetting Last Lexeme
+            Returning from parseAND
+            Getting Lexeme(6, ;, -1)
+            Ungetting Last Lexeme
+         Returning from parseOR
+      Returning from parsePrintStmt
+   Returning from parseStatement
+   Getting Lexeme(6, ;, -1)
+   In parseStatement
+      Getting Lexeme(4, FUNCTION, 17)
+      In parseFunctionDeclaration
+         Getting Lexeme(5, myFun, -1)
+         Getting Lexeme(12, :, -1)
+         In parseParams
+            Getting Lexeme(4, int, 14)
+            Getting Lexeme(5, hi, -1)
+            Getting Lexeme(4, RETURNS, 20)
+            Ungetting Last Lexeme
+         Returning from parseParams
+         Getting Lexeme(4, RETURNS, 20)
+         Getting Lexeme(4, int, 14)
+         Getting Lexeme(4, IS, 19)
+         In parseStatement
+            Getting Lexeme(0, {, -1)
+            In parseStatementList
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 10, 10)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 20, 20)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 30, 30)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(1, }, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(1, }, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(1, }, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(1, }, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(1, }, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(1, }, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(1, }, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(1, }, -1)
+               Ungetting Last Lexeme
+            Returning from parseStatementList
+            Getting Lexeme(1, }, -1)
+         Returning from parseStatement
+         Getting Lexeme(4, END, 1)
+      Returning from parseFunctionDeclaration
+   Returning from parseStatement
+   Getting Lexeme(6, ;, -1)
+   In parseStatement
+      Getting Lexeme(4, VAR, 10)
+      In parseVarStmt
+         Getting Lexeme(5, val, -1)
+         Getting Lexeme(12, :, -1)
+         Getting Lexeme(4, int, 14)
+      Returning from parseVarStmt
+   Returning from parseStatement
+   Getting Lexeme(6, ;, -1)
+   In parseStatement
+      Getting Lexeme(4, WHILE, 3)
+      In parseWhileStmt
+         In parseOR
+            In parseAND
+               In parseCMP
+                  In parseSH
+                     In parseAS
+                        In parseMD
+                           In parsePow
+                              In parseOperand
+                                 Getting Lexeme(9, (, -1)
+                                 In parseOR
+                                    In parseAND
+                                       In parseCMP
+                                          In parseSH
+                                             In parseAS
+                                                In parseMD
+                                                   In parsePow
+                                                      In parseOperand
+                                                         Getting Lexeme(5, val, -1)
+                                                         Getting Lexeme(3, -, 2)
+                                                         Ungetting Last Lexeme
+                                                      Returning VAR from parseOperand
+                                                      Getting Lexeme(3, -, 2)
+                                                      Ungetting Last Lexeme
+                                                   Returning from parsePow
+                                                   Getting Lexeme(3, -, 2)
+                                                   Ungetting Last Lexeme
+                                                Returning from parseMD
+                                                Getting Lexeme(3, -, 2)
+                                                In parseMD
+                                                   In parsePow
+                                                      In parseOperand
+                                                         Getting Lexeme(2, 1, 1)
+                                                      Returning NUM from parseOperand
+                                                      Getting Lexeme(3, *, 4)
+                                                      Ungetting Last Lexeme
+                                                   Returning from parsePow
+                                                   Getting Lexeme(3, *, 4)
+                                                   In parsePow
+                                                      In parseOperand
+                                                         Getting Lexeme(2, 5, 5)
+                                                      Returning NUM from parseOperand
+                                                      Getting Lexeme(3, +, 1)
+                                                      Ungetting Last Lexeme
+                                                   Returning from parsePow
+                                                   Getting Lexeme(3, +, 1)
+                                                   Ungetting Last Lexeme
+                                                Returning from parseMD
+                                                Getting Lexeme(3, +, 1)
+                                                In parseMD
+                                                   In parsePow
+                                                      In parseOperand
+                                                         Getting Lexeme(5, myFun, -1)
+                                                         Getting Lexeme(9, (, -1)
+                                                         In parseFunctionCall
+                                                            In parseOR
+                                                               In parseAND
+                                                                  In parseCMP
+                                                                     In parseSH
+                                                                        In parseAS
+                                                                           In parseMD
+                                                                              In parsePow
+                                                                                 In parseOperand
+                                                                                    Getting Lexeme(5, val, -1)
+                                                                                    Getting Lexeme(3, *, 4)
+                                                                                    Ungetting Last Lexeme
+                                                                                 Returning VAR from parseOperand
+                                                                                 Getting Lexeme(3, *, 4)
+                                                                                 Ungetting Last Lexeme
+                                                                              Returning from parsePow
+                                                                              Getting Lexeme(3, *, 4)
+                                                                              In parsePow
+                                                                                 In parseOperand
+                                                                                    Getting Lexeme(2, 99, 99)
+                                                                                 Returning NUM from parseOperand
+                                                                                 Getting Lexeme(10, ), -1)
+                                                                                 Ungetting Last Lexeme
+                                                                              Returning from parsePow
+                                                                              Getting Lexeme(10, ), -1)
+                                                                              Ungetting Last Lexeme
+                                                                           Returning from parseMD
+                                                                           Getting Lexeme(10, ), -1)
+                                                                           Ungetting Last Lexeme
+                                                                        Returning from parseAS
+                                                                        Getting Lexeme(10, ), -1)
+                                                                        Ungetting Last Lexeme
+                                                                     Returning from parseSH
+                                                                     Getting Lexeme(10, ), -1)
+                                                                     Ungetting Last Lexeme
+                                                                  Returning from parseCMP
+                                                                  Getting Lexeme(10, ), -1)
+                                                                  Ungetting Last Lexeme
+                                                               Returning from parseAND
+                                                               Getting Lexeme(10, ), -1)
+                                                               Ungetting Last Lexeme
+                                                            Returning from parseOR
+                                                            Getting Lexeme(10, ), -1)
+                                                            Ungetting Last Lexeme
+                                                            Getting Lexeme(10, ), -1)
+                                                         Returning EXPR from parseFunctionCall
+                                                      Returning FUN from parseOperand
+                                                      Getting Lexeme(10, ), -1)
+                                                      Ungetting Last Lexeme
+                                                   Returning from parsePow
+                                                   Getting Lexeme(10, ), -1)
+                                                   Ungetting Last Lexeme
+                                                Returning from parseMD
+                                                Getting Lexeme(10, ), -1)
+                                                Ungetting Last Lexeme
+                                             Returning from parseAS
+                                             Getting Lexeme(10, ), -1)
+                                             Ungetting Last Lexeme
+                                          Returning from parseSH
+                                          Getting Lexeme(10, ), -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parseCMP
+                                       Getting Lexeme(10, ), -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseAND
+                                    Getting Lexeme(10, ), -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseOR
+                                 Getting Lexeme(10, ), -1)
+                              Returning EXPR from parseOperand
+                              Getting Lexeme(4, DO, 9)
+                              Ungetting Last Lexeme
+                           Returning from parsePow
+                           Getting Lexeme(4, DO, 9)
+                           Ungetting Last Lexeme
+                        Returning from parseMD
+                        Getting Lexeme(4, DO, 9)
+                        Ungetting Last Lexeme
+                     Returning from parseAS
+                     Getting Lexeme(4, DO, 9)
+                     Ungetting Last Lexeme
+                  Returning from parseSH
+                  Getting Lexeme(4, DO, 9)
+                  Ungetting Last Lexeme
+               Returning from parseCMP
+               Getting Lexeme(4, DO, 9)
+               Ungetting Last Lexeme
+            Returning from parseAND
+            Getting Lexeme(4, DO, 9)
+            Ungetting Last Lexeme
+         Returning from parseOR
+         Getting Lexeme(4, DO, 9)
+         In parseStatement
+            Getting Lexeme(0, {, -1)
+            In parseStatementList
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 10, 10)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 20, 20)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 30, 30)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(5, val, -1)
+                                             Getting Lexeme(6, ;, -1)
+                                             Ungetting Last Lexeme
+                                          Returning VAR from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 50, 50)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(1, }, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(1, }, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(1, }, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(1, }, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(1, }, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(1, }, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(1, }, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(1, }, -1)
+               Ungetting Last Lexeme
+            Returning from parseStatementList
+            Getting Lexeme(1, }, -1)
+         Returning from parseStatement
+         Getting Lexeme(4, END, 1)
+      Returning from parseWhileStatement
+   Returning from parseStatement
+   Getting Lexeme(6, ;, -1)
+   In parseStatement
+      Getting Lexeme(4, WHEN, 6)
+      In parseWhenStmt
+         In parseOR
+            In parseAND
+               In parseCMP
+                  In parseSH
+                     In parseAS
+                        In parseMD
+                           In parsePow
+                              In parseOperand
+                                 Getting Lexeme(5, val, -1)
+                                 Getting Lexeme(3, +, 1)
+                                 Ungetting Last Lexeme
+                              Returning VAR from parseOperand
+                              Getting Lexeme(3, +, 1)
+                              Ungetting Last Lexeme
+                           Returning from parsePow
+                           Getting Lexeme(3, +, 1)
+                           Ungetting Last Lexeme
+                        Returning from parseMD
+                        Getting Lexeme(3, +, 1)
+                        In parseMD
+                           In parsePow
+                              In parseOperand
+                                 Getting Lexeme(2, 2, 2)
+                              Returning NUM from parseOperand
+                              Getting Lexeme(4, THEN, 5)
+                              Ungetting Last Lexeme
+                           Returning from parsePow
+                           Getting Lexeme(4, THEN, 5)
+                           Ungetting Last Lexeme
+                        Returning from parseMD
+                        Getting Lexeme(4, THEN, 5)
+                        Ungetting Last Lexeme
+                     Returning from parseAS
+                     Getting Lexeme(4, THEN, 5)
+                     Ungetting Last Lexeme
+                  Returning from parseSH
+                  Getting Lexeme(4, THEN, 5)
+                  Ungetting Last Lexeme
+               Returning from parseCMP
+               Getting Lexeme(4, THEN, 5)
+               Ungetting Last Lexeme
+            Returning from parseAND
+            Getting Lexeme(4, THEN, 5)
+            Ungetting Last Lexeme
+         Returning from parseOR
+         Getting Lexeme(4, THEN, 5)
+         In parseStatement
+            Getting Lexeme(0, {, -1)
+            In parseStatementList
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 50, 50)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(5, val, -1)
+                                             Getting Lexeme(6, ;, -1)
+                                             Ungetting Last Lexeme
+                                          Returning VAR from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 30, 30)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Getting Lexeme(2, 20, 20)
+                                          Returning NUM from parseOperand
+                                          Getting Lexeme(6, ;, -1)
+                                          Ungetting Last Lexeme
+                                       Returning from parsePow
+                                       Getting Lexeme(6, ;, -1)
+                                       Ungetting Last Lexeme
+                                    Returning from parseMD
+                                    Getting Lexeme(6, ;, -1)
+                                    Ungetting Last Lexeme
+                                 Returning from parseAS
+                                 Getting Lexeme(6, ;, -1)
+                                 Ungetting Last Lexeme
+                              Returning from parseSH
+                              Getting Lexeme(6, ;, -1)
+                              Ungetting Last Lexeme
+                           Returning from parseCMP
+                           Getting Lexeme(6, ;, -1)
+                           Ungetting Last Lexeme
+                        Returning from parseAND
+                        Getting Lexeme(6, ;, -1)
+                        Ungetting Last Lexeme
+                     Returning from parseOR
+                  Returning from parsePrintStmt
+               Returning from parseStatement
+               Getting Lexeme(6, ;, -1)
+               In parseStatement
+                  Getting Lexeme(4, PRINT, 0)
+                  In parsePrintStmt
+                     In parseOR
+                        In parseAND
+                           In parseCMP
+                              In parseSH
+                                 In parseAS
+                                    In parseMD
+                                       In parsePow
+                                          In parseOperand
+                                             Gettin

@@ -1,0 +1,16 @@
+    var enter : global char;
+    enter = 10;
+
+    function add3 : int a, int b gives int is
+    {
+        var c,d,e : int;
+        c = a + b;
+        d = a + c;
+        e = a + d;
+        return e
+    }
+    end;
+
+    print add3(2, 5);
+    print enter
+    

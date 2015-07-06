@@ -1,0 +1,8 @@
+main
+{ local a=3, b=4, c=5;
+  local p=@b;
+  outn *p;
+  *p=*p+1;
+  outn b;
+  outch '\n'; }
+

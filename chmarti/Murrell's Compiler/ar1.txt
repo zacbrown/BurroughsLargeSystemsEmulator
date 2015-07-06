@@ -1,0 +1,19 @@
+
+global a[10];
+
+main
+{ local i=0, r[10];
+  while i<10 do
+  { a[i]=i*i*10+i;
+    i=i+1; }
+  while i>0 do
+  { i=i-1;
+    r[i]=a[9-i]; }
+  i=0;
+  while i<10 do
+  { outn a[i];
+    outch ' ';
+    outn r[i];
+    outch '\n';
+    i=i+1; } }
+

@@ -1,0 +1,9 @@
+#! /bin/bash
+
+cd Assembler
+make
+cd ../Executor
+make
+cd ../My\ Compilier
+make
+cd ..

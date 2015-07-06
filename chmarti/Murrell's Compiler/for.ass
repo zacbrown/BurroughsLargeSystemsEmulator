@@ -1,0 +1,37 @@
+
+main:
+_F_main:
+      push       $fp
+      load  $fp, $sp
+      store $fp, _V_EXITSP
+      sub   $sp, _K_main
+                      ; 2: local(i)
+                      ; 3: for "i" [1](1, 20, block(outn(TIMES(~, ~)), outch(10)))
+      load   $1, 1
+      store  $1, $fp - 1
+_L_1:
+      load   $1, 20
+      rcmp   $1, * $fp - 1
+      jcond $gt, _L_2
+                      ; 4: outn(TIMES(i, i))
+      load   $1, * $fp - 1
+      mul    $1, * $fp - 1
+      outn       $1 
+                      ; 5: outch(10)
+      outch      10
+      load   $1, * $fp - 1
+      add    $1, 1
+      store  $1, $fp - 1
+      jump       _L_1
+_L_2:
+                      ; 6: outs(string#1)
+      outs       _S_1
+_E_main:
+      load  $sp, $fp
+      pop        $fp
+      ret
+_K_main = 1
+
+_S_1: .ascii "The End\n"
+_V_EXITSP: .data 0
+

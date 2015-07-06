@@ -1,0 +1,14 @@
+main
+{ f(123);
+  outch '\n';
+  f(987654321);
+  outch '\n' }
+
+function f(a)
+{ if a=0 then
+    return;
+  local r;
+  r=a%10;
+  outn r;
+  f(a/10);
+  outn r }
