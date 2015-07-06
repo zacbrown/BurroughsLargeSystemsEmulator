@@ -10,12 +10,11 @@ using namespace std;
 
 string inttostring(int i)
  { char c[20];
-   sprintf(c, "%d", i);
+   sprintf_s(c, "%d", i);
    return c; }
 
 bool same(string a, string b)
-/*{ return _strcmpi(a.c_str(), b.c_str())==0; }*/
-{ return strcasecmp(a.c_str(), b.c_str())==0; }
+{ return _stricmp(a.c_str(), b.c_str())==0; }
 
 int digit_value(char c)
  { if (c>='0' && c<='9')
